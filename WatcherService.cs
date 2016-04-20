@@ -140,6 +140,7 @@ namespace JSCrunch
             }
 
             _fileSystemWatcher = new FileSystemWatcher(configurator.PathToWatch, configurator.TestPattern);
+            _fileSystemWatcher.IncludeSubdirectories = configurator.IncludeSubdirectories;
             _fileSystemWatcher.Changed += HandleFileChanged;
             _fileSystemWatcher.Created += HandleFileChanged;
             _fileSystemWatcher.Renamed += HandleFileRenamed;

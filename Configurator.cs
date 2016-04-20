@@ -14,6 +14,7 @@ namespace JSCrunch
         {
             PathToWatch = ConfigurationManager.AppSettings["JSCrunch.PathToWatch"];
             TestPattern = ConfigurationManager.AppSettings["JSCrunch.TestPattern"];
+            IncludeSubdirectories = bool.Parse(ConfigurationManager.AppSettings["JSCrunch.IncludeSubdirectories"]);
             TestRunnerExecutable = ConfigurationManager.AppSettings["JSCrunch.TestRunnerExecutable"];
             TestRunnerParameters = ConfigurationManager.AppSettings["JSCrunch.TestRunnerParameters"];
 
@@ -25,6 +26,7 @@ namespace JSCrunch
         public string PathToWatch { get; private set; }
         public string TestRunnerParameters { get; private set; }
         public string TestRunnerExecutable { get; private set; }
+        public bool IncludeSubdirectories { get; private set; }
 
         public event EventHandler<EventArgs> UpdatedSettingsAvailable;
 
