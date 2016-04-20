@@ -72,7 +72,7 @@ namespace JSCrunch
                     Arguments = arguments,
                     WorkingDirectory = Environment.CurrentDirectory,
                     CreateNoWindow = true,
-                    UseShellExecute = true
+                    UseShellExecute = false
                 }
             };
             process.Start();
