@@ -67,9 +67,11 @@
     <Compile Include="ApplicationDateTime.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Configurator.cs" />
+    <Compile Include="ConsoleOutput.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestRequest.cs" />
+    <Compile Include="TestResult.cs" />
     <Compile Include="UnityExtensions.cs" />
     <Compile Include="WatcherService.cs" />
   </ItemGroup>

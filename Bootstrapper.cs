@@ -6,7 +6,11 @@ namespace JSCrunch
     {
         public static IUnityContainer Boot()
         {
-            return new UnityContainer();
+            var container = new UnityContainer();
+
+            container.RegisterType<IOutput, ConsoleOutput>();
+
+            return container;
         }
     }
 }

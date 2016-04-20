@@ -14,10 +14,12 @@ namespace JSCrunch
         private readonly Queue<TestRequest> _testRequests;
         private FileSystemWatcher _fileSystemWatcher;
         private bool _isRunning;
+        private readonly IOutput _output;
 
-        public WatcherService(Configurator configurator)
+        public WatcherService(Configurator configurator, IOutput output)
         {
             _configurator = configurator;
+            _output = output;
             _testRequests = new Queue<TestRequest>();
             _configurator.UpdatedSettingsAvailable += HandleUpdatedSettingsAvailable;
 
@@ -87,40 +89,39 @@ namespace JSCrunch
             }
         }
 
-        private static void DumpResults(string workingDirectory)
+        private void DumpResults(string workingDirectory)
         {
             var resultFilePath = Path.Combine(workingDirectory, "results.xml");
-            if (File.Exists(resultFilePath))
+            if (!File.Exists(resultFilePath))
             {
-                var document = new XmlDocument();
-                document.Load(resultFilePath);
+                return;
+            }
 
-                var nodes = document.DocumentElement.SelectNodes("/testsuites/testsuite");
+            var document = new XmlDocument();
 
-                foreach (XmlNode node in nodes)
+            document.Load(resultFilePath);
+
+            var nodes = document.DocumentElement?.SelectNodes("/testsuites/testsuite");
+
+            if (nodes == null)
+            {
+                return;
+            }
+
+            foreach (XmlNode node in nodes)
+            {
+                var fileName = Path.GetFileNameWithoutExtension(node.Attributes["name"].Value);
+                var numberOfTests = int.Parse(node.Attributes["tests"].Value);
+                var numberOfFailures = int.Parse(node.Attributes["failures"].Value);
+                var testcasesThatFailed = node.SelectNodes("testcase[failure]").OfType<XmlNode>().Select(n => n.Attributes["name"].Value).ToList();
+
+                _output.Write(new TestResult
                 {
-                    var fileName = Path.GetFileName(node.Attributes["name"].Value);
-                    var numberOfTests = int.Parse(node.Attributes["tests"].Value);
-                    var numberOfFailures = int.Parse(node.Attributes["failures"].Value);
-                    var numberPassed = numberOfTests - numberOfFailures;
-
-                    var result =
-                        $"[{fileName}] {numberOfTests} total, {numberOfFailures} failures, {numberPassed} passed";
-
-                    var foregroundColor = numberOfFailures == 0 ? ConsoleColor.Green : ConsoleColor.Red;
-                    Console.ForegroundColor = foregroundColor;
-                    Console.WriteLine(result);
-                    Console.ResetColor();
-
-                    if (numberOfFailures > 0)
-                    {
-                        var testcasesThatFailed = node.SelectNodes("testcase[failure]");
-                        foreach (XmlNode failedTestCase in testcasesThatFailed)
-                        {
-                            Console.WriteLine("\t" + failedTestCase.Attributes["name"].Value);
-                        }
-                    }
-                }
+                    TestSuite = fileName,
+                    NumberOfTests = numberOfTests,
+                    NumberOfFailures = numberOfFailures,
+                    FailedTests = testcasesThatFailed
+                });
             }
         }
 
