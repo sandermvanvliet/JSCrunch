@@ -15,6 +15,7 @@ namespace JSCrunch
                         $"[{result.TestSuite}] {result.NumberOfTests} total, {result.NumberOfFailures} failures, {result.NumberPassed} passed";
 
             var foregroundColor = result.NumberOfFailures == 0 ? ConsoleColor.Green : ConsoleColor.Red;
+            
             Console.ForegroundColor = foregroundColor;
             Console.WriteLine(message);
             Console.ResetColor();
@@ -23,7 +24,10 @@ namespace JSCrunch
                 .FailedTests
                 .ForEach(failedTest =>
                 {
+                    Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine("\t" + failedTest.Name);
+                    Console.ResetColor();
                     Console.WriteLine("\t\t" + failedTest.Output);
                 });
         }
