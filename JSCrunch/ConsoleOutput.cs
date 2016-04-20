@@ -21,7 +21,11 @@ namespace JSCrunch
 
             result
                 .FailedTests
-                .ForEach(failedTest => Console.WriteLine("\t" + failedTest));
+                .ForEach(failedTest =>
+                {
+                    Console.WriteLine("\t" + failedTest.Name);
+                    Console.WriteLine("\t\t" + failedTest.Output);
+                });
         }
     }
 }

@@ -89,40 +89,11 @@ namespace JSCrunch
             }
         }
 
-        private void DumpResults(string workingDirectory)
+        public void DumpResults(string workingDirectory)
         {
-            var resultFilePath = Path.Combine(workingDirectory, "results.xml");
-            if (!File.Exists(resultFilePath))
-            {
-                return;
-            }
-
-            var document = new XmlDocument();
-
-            document.Load(resultFilePath);
-
-            var nodes = document.DocumentElement?.SelectNodes("/testsuites/testsuite");
-
-            if (nodes == null)
-            {
-                return;
-            }
-
-            foreach (XmlNode node in nodes)
-            {
-                var fileName = Path.GetFileNameWithoutExtension(node.Attributes["name"].Value);
-                var numberOfTests = int.Parse(node.Attributes["tests"].Value);
-                var numberOfFailures = int.Parse(node.Attributes["failures"].Value);
-                var testcasesThatFailed = node.SelectNodes("testcase[failure]").OfType<XmlNode>().Select(n => n.Attributes["name"].Value).ToList();
-
-                _output.Write(new TestResult
-                {
-                    TestSuite = fileName,
-                    NumberOfTests = numberOfTests,
-                    NumberOfFailures = numberOfFailures,
-                    FailedTests = testcasesThatFailed
-                });
-            }
+            TestResults
+                .From(workingDirectory)
+                .ForEach(_output.Write);
         }
 
         private void HandleUpdatedSettingsAvailable(object sender, EventArgs e)
