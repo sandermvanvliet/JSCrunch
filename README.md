@@ -1,0 +1,1 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/h3hvd85d47e8rtqx?svg=true)](https://ci.appveyor.com/project/sandermvanvliet/jscrunch)
