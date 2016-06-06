@@ -5,6 +5,7 @@ namespace JSCrunch
     public interface IOutput
     {
         void Write(TestResult result);
+        void Progress(string message);
     }
 
     public class ConsoleOutput : IOutput
@@ -30,6 +31,11 @@ namespace JSCrunch
                     Console.ResetColor();
                     Console.WriteLine("\t\t" + failedTest.Output);
                 });
+        }
+
+        public void Progress(string message)
+        {
+            Console.WriteLine(message);
         }
     }
 }

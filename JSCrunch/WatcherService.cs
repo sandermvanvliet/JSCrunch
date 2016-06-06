@@ -3,18 +3,17 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Xml;
 
 namespace JSCrunch
 {
     public class WatcherService
     {
         private readonly Configurator _configurator;
+        private readonly IOutput _output;
         private readonly object _syncRoot = new object();
         private readonly Queue<TestRequest> _testRequests;
         private FileSystemWatcher _fileSystemWatcher;
         private bool _isRunning;
-        private readonly IOutput _output;
 
         public WatcherService(Configurator configurator, IOutput output)
         {
@@ -63,6 +62,8 @@ namespace JSCrunch
         private void InvokeTestRunnerOn(string path)
         {
             var arguments = string.Format(_configurator.TestRunnerParameters, path);
+
+            _output.Progress("Detected change on test " + Path.GetFileName(path));
 
             var process = new Process
             {
