@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -38,7 +39,7 @@ namespace JSCrunch
                 var testcasesThatFailed =
                     node.SelectNodes("testcase[failure]")
                         .OfType<XmlNode>()
-                        .Select(n => new TestCaseResult { Name = n.Attributes["name"].Value, Output = n.SelectSingleNode("failure").Attributes["message"].Value })
+                        .Select(n => new TestCaseResult { Name = n.Attributes["name"].Value, Output = MapOutput(n) })
                         .ToList();
 
                 testResults.Add(new TestResult
@@ -53,7 +54,22 @@ namespace JSCrunch
             return testResults;
         }
 
-    public class TestCaseResult
+        private static string MapOutput(XmlNode n)
+        {
+            var message = n.SelectSingleNode("failure").Attributes["message"].Value;
+
+            var stackTrace = SourceMapMapper.SourceLinesFromStackTrace(message);
+
+            // Shitty detection to see if we were able to map anything at all
+            if (stackTrace.Length == 1 && stackTrace[0].Position.File.Contains('\n'))
+            {
+                return message;
+            }
+
+            return string.Join("\n\t\t", stackTrace.Select(loc => loc.ToString()));
+        }
+
+        public class TestCaseResult
     {
         public string Name { get; set; }
         public string Output { get; set; }
