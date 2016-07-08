@@ -23,14 +23,7 @@ namespace JSCrunch.Tests
 
             lines
                 .Should()
-                .HaveCount(6);
-        }
-
-        [TestMethod]
-        public void Bar()
-        {
-            var locations = SourceMapMapper.SourceLinesFromStackTrace(EncodedContent);
-            SourceMapMapper.Map(locations, @"c:\Projects\JSCrunch\JSCrunch.Tests\Portfolio.Page.js.map");
+                .NotBeNullOrEmpty();
         }
     }
 }

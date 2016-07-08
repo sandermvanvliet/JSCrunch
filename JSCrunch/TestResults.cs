@@ -58,15 +58,7 @@ namespace JSCrunch
         {
             var message = n.SelectSingleNode("failure").Attributes["message"].Value;
 
-            var stackTrace = SourceMapMapper.SourceLinesFromStackTrace(message);
-
-            // Shitty detection to see if we were able to map anything at all
-            if (stackTrace.Length == 1 && stackTrace[0].Position.File.Contains('\n'))
-            {
-                return message;
-            }
-
-            return string.Join("\n\t\t", stackTrace.Select(loc => loc.ToString()));
+            return SourceMapMapper.SourceLinesFromStackTrace(message);
         }
 
         public class TestCaseResult

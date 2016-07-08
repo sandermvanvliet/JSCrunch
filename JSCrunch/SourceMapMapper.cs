@@ -10,14 +10,17 @@ namespace JSCrunch
 {
     public class SourceMapMapper
     {
-        public static SourceLocation[] SourceLinesFromStackTrace(string stackTrace)
+        public static string SourceLinesFromStackTrace(string stackTrace)
         {
             var content = HttpUtility.UrlDecode(stackTrace);
-
+            var message = string.Empty;
             var pattern = " (evaluating ";
+
             var pos = content.IndexOf(pattern, StringComparison.Ordinal);
+
             if (pos > 0)
             {
+                message = content.Substring(0, pos).Trim();
                 content = content.Substring(pos).Trim();
             }
 
@@ -42,7 +45,8 @@ namespace JSCrunch
                 }
             }
 
-            return lines;
+            var separator = "\n\t\t";
+            return message + separator + string.Join(separator, lines.Select(line => line.ToString()));
         }
 
         private static SourceLocation ParseLine(string line)
