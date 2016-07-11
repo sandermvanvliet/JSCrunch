@@ -3,12 +3,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             Background="{DynamicResource VsBrush.Window}"
-             Foreground="{DynamicResource VsBrush.WindowText}"
+             xmlns:platformUi="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.14.0"
+             Background="{DynamicResource {x:Static platformUi:EnvironmentColors.ToolWindowBackgroundBrushKey}}"
+             Foreground="{DynamicResource {x:Static platformUi:EnvironmentColors.ToolWindowTextBrushKey}}"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              Name="ProcessingQueueToolWindow"
              Loaded="ProcessingQueueControl_OnLoaded">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="Background" Value="{DynamicResource {x:Static platformUi:EnvironmentColors.GridHeadingBackgroundBrushKey}}" />
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static platformUi:EnvironmentColors.GridHeadingTextBrushKey}}" />
+        </Style>
+        <Style TargetType="{x:Type ListView}">
+            <Setter Property="Background" Value="{DynamicResource {x:Static platformUi:EnvironmentColors.ToolWindowBackgroundBrushKey}}" />
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static platformUi:EnvironmentColors.ToolWindowTextBrushKey}}" />
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <ListView ItemsSource="{Binding Collection}" Name="ListViewItems">
             <ListView.View>
@@ -21,3 +32,10 @@
         </ListView>
     </Grid>
 </UserControl>
+
+
+
+
+
+
+
