@@ -31,6 +31,7 @@ namespace JSCrunch
 
             var groupedByFile = lines
                 .GroupBy(l => l.Position.File, l => l)
+                .Where(f => !string.IsNullOrEmpty(f.Key))
                 .ToList();
 
             foreach (var file in groupedByFile)
@@ -43,6 +44,13 @@ namespace JSCrunch
                 {
                     Map(file.ToArray(), pathToSourceMap);
                 }
+            }
+
+            // Probably the first line in the stack is the message
+            if (string.IsNullOrEmpty(message) && lines.First().Where == null)
+            {
+                message = lines.First().What;
+                lines = lines.Skip(1).ToArray();
             }
 
             var separator = "\n\t\t";
@@ -78,6 +86,14 @@ namespace JSCrunch
             {
                 var parts = line.Split(new[] { " in " }, StringSplitOptions.None);
 
+                if (parts.Length == 1)
+                {
+                    return new SourceLocation
+                    {
+                        What = line
+                    };
+                }
+
                 var what = parts[0].Trim();
 
                 what = what.Replace("(evaluating &apos;", "").Replace("&apos;)", "").Trim();
@@ -87,8 +103,8 @@ namespace JSCrunch
                 return new SourceLocation
                 {
                     What = what,
-                    Where = where,
-                    Position = PositionFrom(where)
+                    Where = @where,
+                    Position = PositionFrom(@where)
                 };
             }
         }

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -24,6 +25,16 @@ namespace JSCrunch.Tests
             lines
                 .Should()
                 .NotBeNullOrEmpty();
+        }
+
+        [TestMethod]
+        public void StackTraceContainsMeaningfullMessage()
+        {
+            var stack = "Expected 0 to be 1.&#10;&#9;&#9;at buildExpectationResult (file:///C:/Projects/JSCrunch/packages/Chutzpah.4.2.1/tools/TestFiles/jasmine/v2/jasmine.js:1547:19)&#10;&#9;&#9;at expectationResultFactory (file:///C:/Projects/JSCrunch/packages/Chutzpah.4.2.1/tools/TestFiles/jasmine/v2/jasmine.js:638:40)&#10;&#9;&#9;at addExpectationResult (file:///C:/Projects/JSCrunch/packages/Chutzpah.4.2.1/tools/TestFiles/jasmine/v2/jasmine.js:330:58)&#10;&#9;&#9;at addExpectationResult (file:///C:/Projects/JSCrunch/packages/Chutzpah.4.2.1/tools/TestFiles/jasmine/v2/jasmine.js:588:41)&#10;&#9;&#9;at file:///C:/Projects/JSCrunch/packages/Chutzpah.4.2.1/tools/TestFiles/jasmine/v2/jasmine.js:1501:32";
+
+            var lines = SourceMapMapper.SourceLinesFromStackTrace(stack);
+
+
         }
     }
 }
