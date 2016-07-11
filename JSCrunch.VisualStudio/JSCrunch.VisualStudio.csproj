@@ -51,6 +51,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ProcessingItem.cs" />
     <Compile Include="ProcessingQueue.cs" />
     <Compile Include="ProcessingQueueCommand.cs" />
     <Compile Include="ProcessingQueueControl.xaml.cs">

@@ -10,14 +10,7 @@
              Name="ProcessingQueueToolWindow"
              Loaded="ProcessingQueueControl_OnLoaded">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="24" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <StackPanel Orientation="Vertical" Grid.Row="0" Background="{DynamicResource VsBrush.Window}">
-            <TextBlock Margin="4" HorizontalAlignment="Center" Foreground="{DynamicResource VsBrush.WindowText}">Processing Queue</TextBlock>
-        </StackPanel>
-        <ListView Grid.Row="1" ItemsSource="{Binding Path=Collection}" Name="ListViewItems">
+        <ListView ItemsSource="{Binding Collection}" Name="ListViewItems">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Action" Width="100" DisplayMemberBinding="{Binding Path=Action}" />

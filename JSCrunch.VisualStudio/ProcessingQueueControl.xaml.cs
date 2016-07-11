@@ -4,6 +4,10 @@
 // </copyright>
 //------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.VisualStudio;
@@ -20,12 +24,17 @@ namespace JSCrunch.VisualStudio
     public partial class ProcessingQueueControl : UserControl, IVsRunningDocTableEvents
     {
         private uint _rdtCookie;
+        private RunningDocumentTable _rdt;
+
+        public ObservableCollection<ProcessingItem> Collection { get; private set; }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ProcessingQueueControl" /> class.
         /// </summary>
         public ProcessingQueueControl()
         {
+            Collection = new ObservableCollection<ProcessingItem>();
+            DataContext = this;
             InitializeComponent();
         }
 
@@ -37,14 +46,9 @@ namespace JSCrunch.VisualStudio
                 return;
             }
 
-            var rdt = new RunningDocumentTable(new ServiceProvider(serviceProvider));
-            if (rdt == null)
-            {
-                return;
-            }
+            _rdt = new RunningDocumentTable(new ServiceProvider(serviceProvider));
 
-            _rdtCookie = rdt.Advise(this);
-
+            _rdtCookie = _rdt.Advise(this);
         }
 
         public int OnAfterFirstDocumentLock(uint docCookie, uint dwRDTLockType, uint dwReadLocksRemaining, uint dwEditLocksRemaining)
@@ -59,7 +63,32 @@ namespace JSCrunch.VisualStudio
 
         public int OnAfterSave(uint docCookie)
         {
+            var documentInfo = _rdt.GetDocumentInfo(docCookie);
+
+            string fileName;
+
+            if (documentInfo.Hierarchy.GetCanonicalName(documentInfo.ItemId, out fileName) == VSConstants.S_OK)
+            {
+                AddItemToQueue(fileName);
+            }
+
             return VSConstants.S_OK;
+        }
+
+        private void AddItemToQueue(string fileName)
+        {
+            var processingItem = new ProcessingItem
+            {
+                Action = "FileSave",
+                Status = "Queued",
+                Timestamp = DateTime.UtcNow,
+                FileName = fileName
+            };
+
+            ThreadPool.QueueUserWorkItem(x =>
+            {
+                Dispatcher.Invoke(() => Collection.Add(processingItem));
+            });
         }
 
         public int OnAfterAttributeChange(uint docCookie, uint grfAttribs)
