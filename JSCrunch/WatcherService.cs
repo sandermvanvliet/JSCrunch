@@ -3,22 +3,26 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using JSCrunch.Core;
+using JSCrunch.Core.Events;
 
 namespace JSCrunch
 {
-    public class WatcherService
+    public class WatcherService : ISubscribable
     {
         private readonly Configurator _configurator;
         private readonly IOutput _output;
+        private readonly EventQueue _eventQueue;
         private readonly object _syncRoot = new object();
         private readonly Queue<TestRequest> _testRequests;
         private FileSystemWatcher _fileSystemWatcher;
         private bool _isRunning;
 
-        public WatcherService(Configurator configurator, IOutput output)
+        public WatcherService(Configurator configurator, IOutput output, EventQueue eventQueue)
         {
             _configurator = configurator;
             _output = output;
+            _eventQueue = eventQueue;
             _testRequests = new Queue<TestRequest>();
             _configurator.UpdatedSettingsAvailable += HandleUpdatedSettingsAvailable;
 
@@ -125,8 +129,7 @@ namespace JSCrunch
 
         private void EnqueueTestRequest(string path)
         {
-            _testRequests.Enqueue(new TestRequest(ApplicationDateTime.UtcNow(), path));
-            OnTestRequestQueued();
+            _eventQueue.Enqueue(new FileChangedEvent(path));
         }
 
         private void HandleFileChanged(object sender, FileSystemEventArgs e)
@@ -136,17 +139,28 @@ namespace JSCrunch
 
         public void Start()
         {
+            _eventQueue.Subscribe(this);
             _fileSystemWatcher.EnableRaisingEvents = true;
         }
 
         public void Stop()
         {
             _fileSystemWatcher.EnableRaisingEvents = false;
+            _eventQueue.Unsubscribe(this);
         }
 
         protected void OnTestRequestQueued()
         {
             TestRequestQueued?.BeginInvoke(this, EventArgs.Empty, null, null);
+        }
+
+        public Type ForEventType => typeof(FileChangedEvent);
+
+        public void Publish(Event eventInstance)
+        {
+            var fileChangedEvent = (FileChangedEvent) eventInstance;
+            _testRequests.Enqueue(new TestRequest(ApplicationDateTime.UtcNow(), fileChangedEvent.Path));
+            OnTestRequestQueued();
         }
     }
 }

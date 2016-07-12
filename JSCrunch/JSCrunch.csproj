@@ -72,6 +72,7 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Configurator.cs" />
     <Compile Include="ConsoleOutput.cs" />
+    <Compile Include="FileChangedEvent.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,6 +89,12 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JSCrunch.Core\JSCrunch.Core.csproj">
+      <Project>{e9b4ae29-9a69-4b16-9363-3a28d4069034}</Project>
+      <Name>JSCrunch.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

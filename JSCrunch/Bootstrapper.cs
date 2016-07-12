@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Unity;
+﻿using JSCrunch.Core;
+using Microsoft.Practices.Unity;
 
 namespace JSCrunch
 {
@@ -9,6 +10,7 @@ namespace JSCrunch
             var container = new UnityContainer();
 
             container.RegisterType<IOutput, ConsoleOutput>();
+            container.RegisterInstance(new EventQueue());
 
             return container;
         }
