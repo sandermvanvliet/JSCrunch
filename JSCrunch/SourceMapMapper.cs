@@ -37,12 +37,15 @@ namespace JSCrunch
             foreach (var file in groupedByFile)
             {
                 var pathToSourceMap = file.Key + ".map";
-
-                pathToSourceMap = new Uri(pathToSourceMap).LocalPath;
-
-                if (File.Exists(pathToSourceMap))
+                Uri parsedUri;
+                if (Uri.TryCreate(pathToSourceMap, UriKind.Absolute, out parsedUri))
                 {
-                    Map(file.ToArray(), pathToSourceMap);
+                    pathToSourceMap = parsedUri.LocalPath;
+
+                    if (File.Exists(pathToSourceMap))
+                    {
+                        Map(file.ToArray(), pathToSourceMap);
+                    }
                 }
             }
 
@@ -112,6 +115,11 @@ namespace JSCrunch
         private static SourceReference PositionFrom(string location)
         {
             var columnPosition = location.LastIndexOf(":", StringComparison.Ordinal);
+
+            if (columnPosition < 0)
+            {
+                return new SourceReference {File = location, LineNumber = 0};
+            }
 
             var linePosition = location.LastIndexOf(":", columnPosition - 1, StringComparison.Ordinal);
 
