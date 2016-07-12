@@ -47,6 +47,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDateTime.cs" />
+    <Compile Include="EventQueue.cs" />
+    <Compile Include="Events\Event.cs" />
+    <Compile Include="Events\ListenerSubscribedEvent.cs" />
+    <Compile Include="ISubscribable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
