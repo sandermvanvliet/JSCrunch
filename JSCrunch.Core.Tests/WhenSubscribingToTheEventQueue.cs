@@ -36,8 +36,4 @@ namespace JSCrunch.Core.Tests
                 .ShouldThrow<InvalidOperationException>();
         }
     }
-
-    public class TestSubscribable : ISubscribable
-    {
-    }
 }

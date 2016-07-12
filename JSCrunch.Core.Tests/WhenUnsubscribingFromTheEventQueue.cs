@@ -1,37 +1,37 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace JSCrunch.Core.Tests
 {
     [TestClass]
-    public class WhenAddingAnEventToTheQueue
+    public class WhenUnsubscribingFromTheEventQueue
     {
         [TestMethod]
-        public void ThenTheCounterReflectsTheNumberOfEvents()
+        public void InvalidOperationExceptionIsThrownWhenListenerIsNotSubscribed()
         {
             var eventQueue = new EventQueue();
+            var subscribable = new TestSubscribable();
 
-            eventQueue.Enqueue(new TestEvent());
+            Action action = () => eventQueue.Unsubscribe(subscribable);
 
-            eventQueue
-                .Count
-                .Should()
-                .Be(1);
+            action.ShouldThrow<InvalidOperationException>();
         }
 
         [TestMethod]
-        public void ThenSubscribedListenerForEventTypeReceivesEvent()
+        public void ThenTheListenerDoesntReceiveNewEvents()
         {
             var eventQueue = new EventQueue();
             var subscribable = new TestSubscribable();
             eventQueue.Subscribe(subscribable);
 
+            eventQueue.Unsubscribe(subscribable);
             eventQueue.Enqueue(new TestEvent());
 
             subscribable
                 .ReceivedEvents
                 .Should()
-                .HaveCount(1);
+                .HaveCount(0);
         }
     }
 }
