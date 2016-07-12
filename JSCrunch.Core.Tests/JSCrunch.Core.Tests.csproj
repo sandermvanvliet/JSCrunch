@@ -61,9 +61,20 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestEvent.cs" />
+    <Compile Include="TestSubscribable.cs" />
+    <Compile Include="WhenAddingAnEventToTheQueue.cs" />
+    <Compile Include="WhenSubscribingToTheEventQueue.cs" />
+    <Compile Include="WhenUnsubscribingFromTheEventQueue.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JSCrunch.Core\JSCrunch.Core.csproj">
+      <Project>{E9B4AE29-9A69-4B16-9363-3A28D4069034}</Project>
+      <Name>JSCrunch.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

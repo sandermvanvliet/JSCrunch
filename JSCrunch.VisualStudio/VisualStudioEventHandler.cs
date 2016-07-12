@@ -14,7 +14,11 @@ namespace JSCrunch.VisualStudio
 
         public void HandleDocumentSave(string file)
         {
-            _processingQueue.Add(new ProcessingItem { FileName = file, Timestamp = ApplicationDateTime.UtcNow() });
+            _processingQueue.Add(new ProcessingItem
+            {
+                FileName = file,
+                Timestamp = ApplicationDateTime.UtcNow()
+            });
         }
     }
 }
