@@ -11,17 +11,15 @@ namespace JSCrunch
     public class WatcherService : ISubscribable
     {
         private readonly Configurator _configurator;
-        private readonly IOutput _output;
         private readonly EventQueue _eventQueue;
         private readonly object _syncRoot = new object();
         private readonly Queue<TestRequest> _testRequests;
         private FileSystemWatcher _fileSystemWatcher;
         private bool _isRunning;
 
-        public WatcherService(Configurator configurator, IOutput output, EventQueue eventQueue)
+        public WatcherService(Configurator configurator, EventQueue eventQueue)
         {
             _configurator = configurator;
-            _output = output;
             _eventQueue = eventQueue;
             _testRequests = new Queue<TestRequest>();
             _configurator.UpdatedSettingsAvailable += HandleUpdatedSettingsAvailable;
@@ -67,7 +65,7 @@ namespace JSCrunch
         {
             var arguments = string.Format(_configurator.TestRunnerParameters, path);
 
-            _output.Progress("Detected change on test " + Path.GetFileName(path));
+            _eventQueue.Enqueue(new TestRunStartedEvent(path));
 
             var process = new Process
             {
@@ -98,7 +96,18 @@ namespace JSCrunch
         {
             TestResults
                 .From(workingDirectory)
-                .ForEach(_output.Write);
+                .ForEach(PublishTestResultEvent);
+        }
+
+        private void PublishTestResultEvent(TestResult testResult)
+        {
+            _eventQueue.Enqueue(new TestRunCompletedEvent
+            {
+                 FailedTests = testResult.FailedTests,
+                 NumberOfFailures = testResult.NumberOfFailures,
+                 NumberOfTests = testResult.NumberOfTests,
+                 TestSuite = testResult.TestSuite
+            });
         }
 
         private void HandleUpdatedSettingsAvailable(object sender, EventArgs e)

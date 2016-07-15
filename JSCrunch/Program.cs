@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using JSCrunch.Core;
+using Microsoft.Practices.Unity;
 using Topshelf;
 
 namespace JSCrunch
@@ -10,6 +13,8 @@ namespace JSCrunch
             ApplicationDateTime.UtcNow = () => DateTime.UtcNow;
 
             var container = Bootstrapper.Boot();
+
+            InitializeListeners(container);
 
             HostFactory
                 .Run(configurator =>
@@ -27,6 +32,28 @@ namespace JSCrunch
                     configurator.SetDisplayName("JSCrunch Service");
                     configurator.SetServiceName("JSCrunchService");
                 });
+        }
+
+        private static void InitializeListeners(IUnityContainer container)
+        {
+            var subscribable = typeof(ISubscribable);
+
+            var subscribables = typeof(Program)
+                .Assembly
+                .GetTypes()
+                .Where(type => type.IsAssignableFrom(subscribable))
+                .ToList();
+
+            var queue = container.Resolve<EventQueue>();
+
+            foreach (var s in subscribables)
+            {
+                var instance = (ISubscribable)Activator.CreateInstance(s);
+
+                queue.Subscribe(instance);
+
+                container.RegisterInstance(instance);
+            }
         }
     }
 }
