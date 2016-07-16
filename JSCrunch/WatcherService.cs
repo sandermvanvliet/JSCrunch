@@ -168,7 +168,7 @@ namespace JSCrunch
         public void Publish(Event eventInstance)
         {
             var fileChangedEvent = (FileChangedEvent) eventInstance;
-            _testRequests.Enqueue(new TestRequest(ApplicationDateTime.UtcNow(), fileChangedEvent.Path));
+            _testRequests.Enqueue(new TestRequest(eventInstance.Timestamp, fileChangedEvent.Path));
             OnTestRequestQueued();
         }
     }
