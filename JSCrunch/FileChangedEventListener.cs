@@ -14,10 +14,9 @@ namespace JSCrunch
         {
             _eventQueue = eventQueue;
             _configurator = configurator;
-            ForEventType = typeof(FileChangedEvent);
         }
 
-        public Type ForEventType { get; }
+        public Type ForEventType => typeof(FileChangedEvent);
 
         public void Publish(Event eventInstance)
         {
