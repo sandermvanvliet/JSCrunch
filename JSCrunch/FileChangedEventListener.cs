@@ -20,10 +20,14 @@ namespace JSCrunch
 
         public void Publish(Event eventInstance)
         {
-            
+            var fileChangedEvent = eventInstance as FileChangedEvent;
+            if (fileChangedEvent != null)
+            {
+                InvokeTestRunnerOn(fileChangedEvent.Path);
+            }
         }
 
-        public void InvokeTestRunnerOn(WatcherService watcherService, string path)
+        private void InvokeTestRunnerOn(string path)
         {
             var arguments = string.Format(_configurator.TestRunnerParameters, path);
 

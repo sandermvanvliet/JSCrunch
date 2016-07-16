@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using JSCrunch.Core.Events;
 
 namespace JSCrunch.Core
 {
-    public class EventQueue
+    public class EventQueue : IEnumerable<Event>
     {
         private readonly List<Event> _queue;
         private readonly List<ISubscribable> _listeners;
@@ -57,6 +58,16 @@ namespace JSCrunch.Core
             }
 
             _listeners.Remove(subscribable);
+        }
+
+        public IEnumerator<Event> GetEnumerator()
+        {
+            return _queue.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

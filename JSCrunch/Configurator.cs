@@ -12,13 +12,18 @@ namespace JSCrunch
 
         public void Refresh()
         {
-            PathToWatch = ConfigurationManager.AppSettings["JSCrunch.PathToWatch"];
-            TestPattern = ConfigurationManager.AppSettings["JSCrunch.TestPattern"];
-            IncludeSubdirectories = bool.Parse(ConfigurationManager.AppSettings["JSCrunch.IncludeSubdirectories"]);
-            TestRunnerExecutable = ConfigurationManager.AppSettings["JSCrunch.TestRunnerExecutable"];
-            TestRunnerParameters = ConfigurationManager.AppSettings["JSCrunch.TestRunnerParameters"];
+            PathToWatch = GetAppSetting("JSCrunch.PathToWatch");
+            TestPattern = GetAppSetting("JSCrunch.TestPattern");
+            IncludeSubdirectories = bool.Parse(GetAppSetting("JSCrunch.IncludeSubdirectories"));
+            TestRunnerExecutable = GetAppSetting("JSCrunch.TestRunnerExecutable");
+            TestRunnerParameters = GetAppSetting("JSCrunch.TestRunnerParameters");
 
             OnUpdateSettingsAvailable();
+        }
+
+        protected virtual string GetAppSetting(string name)
+        {
+            return ConfigurationManager.AppSettings[name];
         }
 
         public string TestPattern { get; private set; }

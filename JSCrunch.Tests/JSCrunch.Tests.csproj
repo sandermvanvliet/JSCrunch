@@ -69,8 +69,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="DummyConfigurator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WhenMappingLinesToSources.cs" />
+    <Compile Include="WhenTheFileChangedEventIsReceived.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -78,6 +80,10 @@
     <EmbeddedResource Include="Portfolio.Page.js.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\JSCrunch.Core\JSCrunch.Core.csproj">
+      <Project>{E9B4AE29-9A69-4B16-9363-3A28D4069034}</Project>
+      <Name>JSCrunch.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\JSCrunch\JSCrunch.csproj">
       <Project>{8A9589C1-5FB4-4B57-8490-028D2EC9B96E}</Project>
       <Name>JSCrunch</Name>
