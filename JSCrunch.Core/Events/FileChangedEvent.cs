@@ -1,6 +1,4 @@
-using JSCrunch.Core.Events;
-
-namespace JSCrunch
+namespace JSCrunch.Core.Events
 {
     public class FileChangedEvent : Event
     {

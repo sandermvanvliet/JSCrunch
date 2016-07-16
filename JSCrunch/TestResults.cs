@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
+using JSCrunch.Core;
 
 namespace JSCrunch
 {
@@ -60,11 +61,5 @@ namespace JSCrunch
 
             return SourceMapMapper.SourceLinesFromStackTrace(message);
         }
-
-        public class TestCaseResult
-    {
-        public string Name { get; set; }
-        public string Output { get; set; }
     }
-}
 }
