@@ -33,6 +33,13 @@ namespace JSCrunch
 
             _eventQueue.Enqueue(new TestRunStartedEvent(path));
 
+            var process = ExecuteTestRunner(arguments);
+
+            DumpResults(process.StartInfo.WorkingDirectory);
+        }
+
+        private Process ExecuteTestRunner(string arguments)
+        {
             var process = new Process
             {
                 StartInfo =
@@ -49,13 +56,12 @@ namespace JSCrunch
             try
             {
                 process.WaitForExit();
-
-                DumpResults(process.StartInfo.WorkingDirectory);
             }
             catch (Exception ex)
             {
                 throw new Exception("Failed to start test runner: " + ex.Message, ex);
             }
+            return process;
         }
 
         private void DumpResults(string workingDirectory)
