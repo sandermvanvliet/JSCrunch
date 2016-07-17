@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.IO;
+using System.Linq;
 using FluentAssertions;
 using JSCrunch.Core;
 using JSCrunch.Core.Events;
@@ -11,6 +13,7 @@ namespace JSCrunch.Tests
     {
         private EventQueue _eventQueue;
         private FileChangedEventListener _listener;
+        private readonly string _workingDirectorty = Path.GetTempPath();
 
         [TestInitialize]
         public void Initialize()
@@ -41,9 +44,22 @@ namespace JSCrunch.Tests
                 .HaveCount(1);
         }
 
+        [TestMethod]
+        public void AndThereAreTestResultsThenATestResultsAvailableEventIsPublished()
+        {
+            var resultsFile = Path.Combine(Environment.CurrentDirectory, "results.xml");
+            File.WriteAllText(resultsFile, "<?xml version=\"1.0\" encoding=\"utf-8\"?><testsuites><testsuite name=\"test\" tests=\"1\" failures=\"0\"></testsuite></testsuites>");
+            AFileChanged();
+
+            _eventQueue
+                .OfType<TestResultsAvailableEvent>()
+                .Should()
+                .HaveCount(1);
+        }
+
         private void AFileChanged()
         {
-            _listener.Publish(new FileChangedEvent("c:\\temp\\somefile.js"));
+            _listener.Publish(new FileChangedEvent(Path.Combine(_workingDirectorty, "somefile.js")));
         }
     }
 }
