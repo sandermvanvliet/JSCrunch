@@ -13,11 +13,11 @@ namespace JSCrunch
             _output = output;
         }
 
-        public Type ForEventType => typeof(TestRunCompletedEvent);
+        public Type ForEventType => typeof(TestResultsAvailableEvent);
 
         public void Publish(Event eventInstance)
         {
-            var testRunCompletedEvent = (TestRunCompletedEvent) eventInstance;
+            var testRunCompletedEvent = (TestResultsAvailableEvent) eventInstance;
             if (testRunCompletedEvent != null)
             {
                 _output.Write(new TestResult

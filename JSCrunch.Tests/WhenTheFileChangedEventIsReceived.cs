@@ -22,12 +22,28 @@ namespace JSCrunch.Tests
         [TestMethod]
         public void ThenATestRunStartedEventIsPublished()
         {
-            _listener.Publish(new FileChangedEvent("c:\\temp\\somefile.js"));
+            AFileChanged();
 
             _eventQueue
                 .OfType<TestRunStartedEvent>()
                 .Should()
                 .HaveCount(1, "there should be a TestRunStartedEvent");
+        }
+
+        [TestMethod]
+        public void AndTheTestRunCompletesThenATestRunCompletedEventIsPublished()
+        {
+            AFileChanged();
+
+            _eventQueue
+                .OfType<TestRunCompletedEvent>()
+                .Should()
+                .HaveCount(1);
+        }
+
+        private void AFileChanged()
+        {
+            _listener.Publish(new FileChangedEvent("c:\\temp\\somefile.js"));
         }
     }
 }

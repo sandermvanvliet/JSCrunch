@@ -36,6 +36,8 @@ namespace JSCrunch
             var process = ExecuteTestRunner(arguments);
 
             DumpResults(process.StartInfo.WorkingDirectory);
+
+            _eventQueue.Enqueue(new TestRunCompletedEvent());
         }
 
         private Process ExecuteTestRunner(string arguments)
@@ -68,12 +70,12 @@ namespace JSCrunch
         {
             TestResults
                 .From(workingDirectory)
-                .ForEach(PublishTestResultEvent);
+                .ForEach(PublishTestResults);
         }
 
-        private void PublishTestResultEvent(TestResult testResult)
+        private void PublishTestResults(TestResult testResult)
         {
-            _eventQueue.Enqueue(new TestRunCompletedEvent
+            _eventQueue.Enqueue(new TestResultsAvailableEvent
             {
                 FailedTests = testResult.FailedTests,
                 NumberOfFailures = testResult.NumberOfFailures,
