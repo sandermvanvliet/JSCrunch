@@ -41,14 +41,14 @@ namespace JSCrunch
             var subscribables = typeof(Program)
                 .Assembly
                 .GetTypes()
-                .Where(type => type.IsAssignableFrom(subscribable))
+                .Where(type => subscribable.IsAssignableFrom(type))
                 .ToList();
 
             var queue = container.Resolve<EventQueue>();
 
             foreach (var s in subscribables)
             {
-                var instance = (ISubscribable)Activator.CreateInstance(s);
+                var instance = (ISubscribable)container.Resolve(s);
 
                 queue.Subscribe(instance);
 
