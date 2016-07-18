@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using JSCrunch.Core;
 using Microsoft.Practices.Unity;
 using Topshelf;
@@ -36,19 +37,28 @@ namespace JSCrunch
 
         private static void InitializeListeners(IUnityContainer container)
         {
-            var subscribable = typeof(ISubscribable);
+            InitializeListenersFromAssembly(container, typeof(ISubscribable).Assembly);
+            InitializeListenersFromAssembly(container, typeof(Program).Assembly);
+        }
 
-            var subscribables = typeof(Program)
-                .Assembly
+        private static void InitializeListenersFromAssembly(IUnityContainer container, Assembly assembly)
+        {
+            var subscribableType = typeof(ISubscribable);
+
+            var implementingTypes = assembly
                 .GetTypes()
-                .Where(type => subscribable.IsAssignableFrom(type))
+                .Where(type => subscribableType.IsAssignableFrom(type) &&
+                               type.IsClass &&
+                               !type.IsAbstract)
                 .ToList();
 
             var queue = container.Resolve<EventQueue>();
 
-            foreach (var s in subscribables)
+            foreach (var subscribable in implementingTypes)
             {
-                var instance = (ISubscribable)container.Resolve(s);
+                container.RegisterType(subscribableType, subscribable, new ContainerControlledLifetimeManager());
+
+                var instance = (ISubscribable)container.Resolve(subscribable);
 
                 queue.Subscribe(instance);
 
