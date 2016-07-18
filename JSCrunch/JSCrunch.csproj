@@ -68,7 +68,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationDateTime.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Configurator.cs" />
     <Compile Include="ConsoleOutput.cs" />
