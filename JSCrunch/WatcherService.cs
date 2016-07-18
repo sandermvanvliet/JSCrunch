@@ -49,11 +49,6 @@ namespace JSCrunch
             EnqueueTestRequest(e.FullPath);
         }
 
-        private void EnqueueTestRequest(string path)
-        {
-            _eventQueue.Enqueue(new FileChangedEvent(path));
-        }
-
         private void HandleFileChanged(object sender, FileSystemEventArgs e)
         {
             EnqueueTestRequest(e.FullPath);
@@ -67,6 +62,11 @@ namespace JSCrunch
         public void Stop()
         {
             _fileSystemWatcher.EnableRaisingEvents = false;
+        }
+
+        private void EnqueueTestRequest(string path)
+        {
+            _eventQueue.Enqueue(new FileChangedEvent(path));
         }
     }
 }
