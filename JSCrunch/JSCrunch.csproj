@@ -81,6 +81,7 @@
     <Compile Include="TestResult.cs" />
     <Compile Include="TestResults.cs" />
     <Compile Include="TestRunCompletedListener.cs" />
+    <Compile Include="TestRunStartedListener.cs" />
     <Compile Include="UnityExtensions.cs" />
     <Compile Include="WatcherService.cs" />
   </ItemGroup>

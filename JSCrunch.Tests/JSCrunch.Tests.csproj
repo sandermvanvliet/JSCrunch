@@ -70,8 +70,10 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DummyConfigurator.cs" />
+    <Compile Include="OutputDouble.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WhenMappingLinesToSources.cs" />
+    <Compile Include="WhenTestRunStartedEventIsReceived.cs" />
     <Compile Include="WhenTheFileChangedEventIsReceived.cs" />
   </ItemGroup>
   <ItemGroup>
