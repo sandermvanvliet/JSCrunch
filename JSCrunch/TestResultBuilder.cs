@@ -7,7 +7,7 @@ using JSCrunch.Core;
 
 namespace JSCrunch
 {
-    public class TestResults
+    public static class TestResultBuilder
     {
         public static List<TestResult> From(string workingDirectory)
         {

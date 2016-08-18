@@ -79,7 +79,7 @@
     <Compile Include="SourceMapMapper.cs" />
     <Compile Include="TestRequest.cs" />
     <Compile Include="TestResult.cs" />
-    <Compile Include="TestResults.cs" />
+    <Compile Include="TestResultBuilder.cs" />
     <Compile Include="TestRunCompletedListener.cs" />
     <Compile Include="TestRunStartedListener.cs" />
     <Compile Include="UnityExtensions.cs" />

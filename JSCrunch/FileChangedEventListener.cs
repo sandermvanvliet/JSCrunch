@@ -68,7 +68,7 @@ namespace JSCrunch
 
         private void DumpResults(string workingDirectory)
         {
-            TestResults
+            TestResultBuilder
                 .From(workingDirectory)
                 .ForEach(PublishTestResults);
         }
