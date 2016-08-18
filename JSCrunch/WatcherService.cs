@@ -5,6 +5,8 @@ using JSCrunch.Core.Events;
 
 namespace JSCrunch
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
+    // WatcherService is only ever instantiated through Unity
     public class WatcherService
     {
         private readonly Configurator _configurator;
