@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using JSCrunch.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace JSCrunch.VisualStudio.Tests
@@ -13,7 +14,7 @@ namespace JSCrunch.VisualStudio.Tests
         public void Initialize()
         {
             _processingQueue = new List<ProcessingItem>();
-            _eventHandler = new VisualStudioEventHandler(_processingQueue);
+            _eventHandler = new VisualStudioEventHandler(_processingQueue, new EventQueue());
         }
 
         [TestMethod]
