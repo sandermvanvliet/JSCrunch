@@ -26,11 +26,6 @@ namespace JSCrunch.VisualStudio
             });
         }
 
-        public void HandleSolutionLoaded()
-        {
-            _eventQueue.Enqueue(new SolutionLoadedEvent(null));
-        }
-
         public int OnAfterOpenProject(IVsHierarchy pHierarchy, int fAdded)
         {
             return VSConstants.S_OK;
@@ -63,6 +58,8 @@ namespace JSCrunch.VisualStudio
 
         public int OnAfterOpenSolution(object pUnkReserved, int fNewSolution)
         {
+            _eventQueue.Enqueue(new SolutionLoadedEvent(null));
+
             return VSConstants.S_OK;
         }
 

@@ -17,7 +17,7 @@ namespace JSCrunch.VisualStudio.Tests
             var eventQueue = new EventQueue();
             var handler = new VisualStudioEventHandler(processingQueue, eventQueue);
 
-            handler.HandleSolutionLoaded();
+            handler.OnAfterOpenSolution(null, 0);
 
             eventQueue
                 .OfType<SolutionLoadedEvent>()
