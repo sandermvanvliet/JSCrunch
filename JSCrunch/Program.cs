@@ -37,33 +37,8 @@ namespace JSCrunch
 
         private static void InitializeListeners(IUnityContainer container)
         {
-            InitializeListenersFromAssembly(container, typeof(ISubscribable).Assembly);
-            InitializeListenersFromAssembly(container, typeof(Program).Assembly);
-        }
-
-        private static void InitializeListenersFromAssembly(IUnityContainer container, Assembly assembly)
-        {
-            var subscribableType = typeof(ISubscribable);
-
-            var implementingTypes = assembly
-                .GetTypes()
-                .Where(type => subscribableType.IsAssignableFrom(type) &&
-                               type.IsClass &&
-                               !type.IsAbstract)
-                .ToList();
-
-            var queue = container.Resolve<EventQueue>();
-
-            foreach (var subscribable in implementingTypes)
-            {
-                container.RegisterType(subscribableType, subscribable, new ContainerControlledLifetimeManager());
-
-                var instance = (ISubscribable)container.Resolve(subscribable);
-
-                queue.Subscribe(instance);
-
-                container.RegisterInstance(instance);
-            }
+            Core.InitializeListeners.FromAssembly(container, typeof(ISubscribable).Assembly);
+            Core.InitializeListeners.FromAssembly(container, typeof(Program).Assembly);
         }
     }
 }

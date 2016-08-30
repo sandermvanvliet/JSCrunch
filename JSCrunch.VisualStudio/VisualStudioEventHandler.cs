@@ -46,6 +46,8 @@ namespace JSCrunch.VisualStudio
 
         public int OnAfterLoadProject(IVsHierarchy pStubHierarchy, IVsHierarchy pRealHierarchy)
         {
+            _eventQueue.Enqueue(new DiscoverTestsEvent(null));
+
             return VSConstants.S_OK;
         }
 

@@ -51,11 +51,12 @@ namespace JSCrunch.VisualStudio
                 uint fetched;
                 var vsHierarchies = new IVsHierarchy[1];
 
-                enumerator.Next((uint)vsHierarchies.Length, vsHierarchies, out fetched);
-
-                if (fetched > 0)
+                while (enumerator.Next((uint) vsHierarchies.Length, vsHierarchies, out fetched) == VSConstants.S_OK)
                 {
-                    projects.AddRange(vsHierarchies.Cast<IVsProject>().Take((int) fetched));
+                    if (fetched > 0)
+                    {
+                        projects.AddRange(vsHierarchies.Cast<IVsProject>().Take((int) fetched));
+                    }
                 }
             }
 

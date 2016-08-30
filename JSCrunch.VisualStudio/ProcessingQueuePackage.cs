@@ -45,6 +45,7 @@ namespace JSCrunch.VisualStudio
     [ProvideToolWindow(typeof(ProcessingQueueToolWindow))]
     [Guid(ProcessingQueuePackage.PackageGuidString)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
+    [ProvideAutoLoad(UIContextGuids80.SolutionExists)]
     public sealed class ProcessingQueuePackage : Package
     {
         private VisualStudioEventHandler eventHandler;
@@ -77,10 +78,13 @@ namespace JSCrunch.VisualStudio
             // It's because we're dependant on the IServiceProvider which isn't
             // created until the package is loaded within the VS environment so
             // that's why this initialization is done here
-            dependencyContainer = Bootstrapper.Initialize(GetService(typeof(IServiceProvider)) as IServiceProvider);
+            dependencyContainer = Bootstrapper.Initialize(this);
+
+            InitializeListeners.FromAssembly(dependencyContainer, typeof(EventQueue).Assembly);
+            InitializeListeners.FromAssembly(dependencyContainer, this.GetType().Assembly);
 
             eventHandler = dependencyContainer.Resolve<VisualStudioEventHandler>();
-
+            
             ProcessingQueueCommand.Initialize(this);
             base.Initialize();
 
