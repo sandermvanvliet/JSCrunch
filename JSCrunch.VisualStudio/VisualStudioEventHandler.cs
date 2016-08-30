@@ -26,7 +26,7 @@ namespace JSCrunch.VisualStudio
 
         public void HandleSolutionLoaded()
         {
-            _eventQueue.Enqueue(new SolutionLoadedEvent());
+            _eventQueue.Enqueue(new SolutionLoadedEvent(null));
         }
     }
 }
