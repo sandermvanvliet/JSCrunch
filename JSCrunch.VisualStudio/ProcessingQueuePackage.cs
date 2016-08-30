@@ -5,11 +5,13 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using JSCrunch.Core;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
@@ -43,6 +45,9 @@ namespace JSCrunch.VisualStudio
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
     public sealed class ProcessingQueuePackage : Package
     {
+        private readonly VisualStudioEventHandler eventHandler;
+        private uint solutionEventsCookie;
+
         /// <summary>
         /// ProcessingQueuePackage GUID string.
         /// </summary>
@@ -57,9 +62,9 @@ namespace JSCrunch.VisualStudio
             // any Visual Studio service because at this point the package object is created but
             // not sited yet inside Visual Studio environment. The place to do all the other
             // initialization is the Initialize method.
-        }
 
-        #region Package Members
+            eventHandler =new VisualStudioEventHandler(new List<ProcessingItem>(), new EventQueue());
+        }
 
         /// <summary>
         /// Initialization of the package; this method is called right after the package is sited, so this is the place
@@ -69,8 +74,22 @@ namespace JSCrunch.VisualStudio
         {
             ProcessingQueueCommand.Initialize(this);
             base.Initialize();
+
+            // Subscribe to solution loaded/unloaded events
+            var solution = GetService(typeof(SVsSolution)) as IVsSolution;
+
+            solution.AdviseSolutionEvents(eventHandler, out solutionEventsCookie);
         }
 
-        #endregion
+        protected override void Dispose(bool disposing)
+        {
+            if (solutionEventsCookie != 0)
+            {
+                var solution = GetService(typeof(SVsSolution)) as IVsSolution;
+                solution.UnadviseSolutionEvents(solutionEventsCookie);
+            }
+
+            base.Dispose(disposing);
+        }
     }
 }
