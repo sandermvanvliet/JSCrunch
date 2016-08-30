@@ -12,6 +12,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using JSCrunch.Core;
+using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
@@ -47,6 +48,7 @@ namespace JSCrunch.VisualStudio
     {
         private readonly VisualStudioEventHandler eventHandler;
         private uint solutionEventsCookie;
+        private IUnityContainer dependencyContainer;
 
         /// <summary>
         /// ProcessingQueuePackage GUID string.
@@ -63,7 +65,9 @@ namespace JSCrunch.VisualStudio
             // not sited yet inside Visual Studio environment. The place to do all the other
             // initialization is the Initialize method.
 
-            eventHandler =new VisualStudioEventHandler(new List<ProcessingItem>(), new EventQueue());
+            dependencyContainer = Bootstrapper.Initialize();
+
+            eventHandler = dependencyContainer.Resolve<VisualStudioEventHandler>();
         }
 
         /// <summary>

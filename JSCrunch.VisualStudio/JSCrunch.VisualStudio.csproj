@@ -52,6 +52,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="ProcessingItem.cs" />
     <Compile Include="ProcessingQueueToolWindow.cs" />
     <Compile Include="ProcessingQueueCommand.cs" />
