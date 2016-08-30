@@ -38,7 +38,7 @@ namespace JSCrunch.VisualStudio
     [PackageRegistration(UseManagedResourcesOnly = true)]
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)] // Info on this package for Help/About
     [ProvideMenuResource("Menus.ctmenu", 1)]
-    [ProvideToolWindow(typeof(ProcessingQueue))]
+    [ProvideToolWindow(typeof(ProcessingQueueToolWindow))]
     [Guid(ProcessingQueuePackage.PackageGuidString)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
     public sealed class ProcessingQueuePackage : Package
@@ -49,7 +49,7 @@ namespace JSCrunch.VisualStudio
         public const string PackageGuidString = "33b97e83-89d6-441d-ad4e-9e7dc0f828d1";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProcessingQueue"/> class.
+        /// Initializes a new instance of the <see cref="ProcessingQueueToolWindow"/> class.
         /// </summary>
         public ProcessingQueuePackage()
         {

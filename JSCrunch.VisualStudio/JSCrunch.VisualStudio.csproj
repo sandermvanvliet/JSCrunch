@@ -53,7 +53,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ProcessingItem.cs" />
-    <Compile Include="ProcessingQueue.cs" />
+    <Compile Include="ProcessingQueueToolWindow.cs" />
     <Compile Include="ProcessingQueueCommand.cs" />
     <Compile Include="ProcessingQueueControl.xaml.cs">
       <DependentUpon>ProcessingQueueControl.xaml</DependentUpon>

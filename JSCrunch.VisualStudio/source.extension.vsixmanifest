@@ -3,7 +3,8 @@
   <Metadata>
     <Identity Id="JSCrunch.VisualStudio.Microsoft.46ea5eae-5a85-4e20-a050-6e119b466b2c" Version="1.0" Language="en-US" Publisher="Microsoft" />
     <DisplayName>JSCrunch.VisualStudio</DisplayName>
-    <Description>Empty VSIX Project.</Description>
+    <Description xml:space="preserve">JSCrunch continuous test runner</Description>
+    <Tags>jasmine;unit test;javascript;typescript;chutzpah</Tags>
   </Metadata>
   <Installation>
     <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[14.0]" />
