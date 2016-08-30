@@ -18,6 +18,7 @@ using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.Win32;
+using IServiceProvider = System.IServiceProvider;
 
 namespace JSCrunch.VisualStudio
 {
@@ -46,7 +47,7 @@ namespace JSCrunch.VisualStudio
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
     public sealed class ProcessingQueuePackage : Package
     {
-        private readonly VisualStudioEventHandler eventHandler;
+        private VisualStudioEventHandler eventHandler;
         private uint solutionEventsCookie;
         private IUnityContainer dependencyContainer;
 
@@ -64,10 +65,6 @@ namespace JSCrunch.VisualStudio
             // any Visual Studio service because at this point the package object is created but
             // not sited yet inside Visual Studio environment. The place to do all the other
             // initialization is the Initialize method.
-
-            dependencyContainer = Bootstrapper.Initialize();
-
-            eventHandler = dependencyContainer.Resolve<VisualStudioEventHandler>();
         }
 
         /// <summary>
@@ -76,6 +73,14 @@ namespace JSCrunch.VisualStudio
         /// </summary>
         protected override void Initialize()
         {
+            // You may wonder why this isn't in the constructor.
+            // It's because we're dependant on the IServiceProvider which isn't
+            // created until the package is loaded within the VS environment so
+            // that's why this initialization is done here
+            dependencyContainer = Bootstrapper.Initialize(GetService(typeof(IServiceProvider)) as IServiceProvider);
+
+            eventHandler = dependencyContainer.Resolve<VisualStudioEventHandler>();
+
             ProcessingQueueCommand.Initialize(this);
             base.Initialize();
 

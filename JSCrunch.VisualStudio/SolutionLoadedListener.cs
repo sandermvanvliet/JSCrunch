@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using JSCrunch.Core;
 using JSCrunch.Core.Events;
@@ -31,6 +32,8 @@ namespace JSCrunch.VisualStudio
             var solution = solutionLoadedEvent.Solution;
 
             var webProjects = GetWebProjectsIn(solution);
+
+            Debug.WriteLine("Found "+ webProjects.Count() + "projects");
 
             foreach (var webProject in webProjects)
             {

@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using JSCrunch.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NSubstitute;
 
 namespace JSCrunch.VisualStudio.Tests
 {
@@ -14,7 +16,7 @@ namespace JSCrunch.VisualStudio.Tests
         public void Initialize()
         {
             _processingQueue = new List<ProcessingItem>();
-            _eventHandler = new VisualStudioEventHandler(_processingQueue, new EventQueue());
+            _eventHandler = new VisualStudioEventHandler(_processingQueue, new EventQueue(), Substitute.For<IServiceProvider>());
         }
 
         [TestMethod]
