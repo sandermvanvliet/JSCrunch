@@ -1,5 +1,5 @@
 ﻿//------------------------------------------------------------------------------
-// <copyright file="ProcessingQueueToolWindow.cs" company="Microsoft">
+// <copyright file="EventLogToolWindow.cs" company="Microsoft">
 //     Copyright (c) Microsoft.  All rights reserved.
 // </copyright>
 //------------------------------------------------------------------------------
@@ -38,14 +38,14 @@ namespace JSCrunch.VisualStudio
             // we are not calling Dispose on this object. This is because ToolWindowPane calls Dispose on
             // the object returned by the Content property.
 
-            Content = new ProcessingQueueControl();
+            Content = new EventLogControl();
         }
 
         public override void OnToolWindowCreated()
         {
             var unityContainer = ((IServiceProvider) Package).GetService(typeof(IUnityContainer)) as IUnityContainer;
             var eventQueue = unityContainer.Resolve<EventQueue>();
-            ((ProcessingQueueControl) Content).EventQueue = eventQueue;
+            ((EventLogControl) Content).EventQueue = eventQueue;
         }
     }
 }

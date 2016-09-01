@@ -1,5 +1,5 @@
 ﻿//------------------------------------------------------------------------------
-// <copyright file="ProcessingQueueControl.xaml.cs" company="Microsoft">
+// <copyright file="EventLogControl.xaml.cs" company="Microsoft">
 //     Copyright (c) Microsoft.  All rights reserved.
 // </copyright>
 //------------------------------------------------------------------------------
@@ -16,16 +16,16 @@ using IOleServiceProvider = Microsoft.VisualStudio.OLE.Interop.IServiceProvider;
 namespace JSCrunch.VisualStudio
 {
     /// <summary>
-    ///     Interaction logic for ProcessingQueueControl.
+    ///     Interaction logic for EventLogControl.
     /// </summary>
-    public partial class ProcessingQueueControl : UserControl, ISubscribable<Event>
+    public partial class EventLogControl : UserControl, ISubscribable<Event>
     {
         private EventQueue _eventQueue;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="ProcessingQueueControl" /> class.
+        ///     Initializes a new instance of the <see cref="EventLogControl" /> class.
         /// </summary>
-        public ProcessingQueueControl()
+        public EventLogControl()
         {
             Collection = new ObservableCollection<Event>();
             DataContext = this;
@@ -54,7 +54,7 @@ namespace JSCrunch.VisualStudio
             Collection.Add(eventInstance);
         }
 
-        private void ProcessingQueueControl_OnLoaded(object sender, RoutedEventArgs e)
+        private void Handle_OnLoaded(object sender, RoutedEventArgs e)
         {
         }
     }

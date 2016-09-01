@@ -58,8 +58,8 @@
     <Compile Include="ProcessingItem.cs" />
     <Compile Include="ProcessingQueueToolWindow.cs" />
     <Compile Include="ProcessingQueueCommand.cs" />
-    <Compile Include="ProcessingQueueControl.xaml.cs">
-      <DependentUpon>ProcessingQueueControl.xaml</DependentUpon>
+    <Compile Include="EventLogControl.xaml.cs">
+      <DependentUpon>EventLogControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ProcessingQueuePackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,7 +83,7 @@
     <Content Include="stylesheet.css" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="ProcessingQueueControl.xaml">
+    <Page Include="EventLogControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
