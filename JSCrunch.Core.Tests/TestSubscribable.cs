@@ -4,7 +4,7 @@ using JSCrunch.Core.Events;
 
 namespace JSCrunch.Core.Tests
 {
-    public class TestSubscribable : ISubscribable
+    public class TestSubscribable : ISubscribable<TestEvent>
     {
         public TestSubscribable()
         {
@@ -14,7 +14,7 @@ namespace JSCrunch.Core.Tests
         public List<Event> ReceivedEvents { get; }
         public Type ForEventType => typeof(TestEvent);
 
-        public void Publish(Event eventInstance)
+        public void Publish(TestEvent eventInstance)
         {
             ReceivedEvents.Add(eventInstance);
         }

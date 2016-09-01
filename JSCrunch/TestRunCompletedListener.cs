@@ -4,7 +4,7 @@ using JSCrunch.Core.Events;
 
 namespace JSCrunch
 {
-    public class TestRunCompletedListener : ISubscribable
+    public class TestRunCompletedListener : ISubscribable<TestResultsAvailableEvent>
     {
         private readonly IOutput _output;
 
@@ -15,19 +15,15 @@ namespace JSCrunch
 
         public Type ForEventType => typeof(TestResultsAvailableEvent);
 
-        public void Publish(Event eventInstance)
+        public void Publish(TestResultsAvailableEvent testRunCompletedEvent)
         {
-            var testRunCompletedEvent = (TestResultsAvailableEvent) eventInstance;
-            if (testRunCompletedEvent != null)
+            _output.Write(new TestResult
             {
-                _output.Write(new TestResult
-                {
-                    FailedTests = testRunCompletedEvent.FailedTests,
-                    NumberOfFailures = testRunCompletedEvent.NumberOfFailures,
-                    NumberOfTests = testRunCompletedEvent.NumberOfTests,
-                    TestSuite = testRunCompletedEvent.TestSuite
-                });
-            }
+                FailedTests = testRunCompletedEvent.FailedTests,
+                NumberOfFailures = testRunCompletedEvent.NumberOfFailures,
+                NumberOfTests = testRunCompletedEvent.NumberOfTests,
+                TestSuite = testRunCompletedEvent.TestSuite
+            });
         }
     }
 }

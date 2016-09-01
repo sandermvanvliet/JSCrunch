@@ -17,12 +17,12 @@ namespace JSCrunch.Core
             _listeners = new List<ISubscribable>();
         }
 
-        public void Enqueue(Event eventInstance)
+        public void Enqueue<TEvent>(TEvent eventInstance) where TEvent: Event
         {
             _queue.Add(eventInstance);
 
             var listenersForEvent = _listeners
-                .Where(listener => listener.ForEventType == eventInstance.GetType())
+                .OfType<ISubscribable<TEvent>>()
                 .ToList();
 
             foreach (var listener in listenersForEvent)

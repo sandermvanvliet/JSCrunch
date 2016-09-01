@@ -4,7 +4,7 @@ using JSCrunch.Core.Events;
 
 namespace JSCrunch
 {
-    public class TestRunStartedListener : ISubscribable
+    public class TestRunStartedListener : ISubscribable<TestRunStartedEvent>
     {
         private readonly IOutput _output;
 
@@ -15,14 +15,9 @@ namespace JSCrunch
 
         public Type ForEventType => typeof(TestRunStartedEvent);
 
-        public void Publish(Event eventInstance)
+        public void Publish(TestRunStartedEvent testRunStartedEvent)
         {
-            var testRunStartedEvent = eventInstance as TestRunStartedEvent;
-
-            if (testRunStartedEvent != null)
-            {
-                _output.Progress($"Test run started for '{testRunStartedEvent.Path}'");
-            }
+            _output.Progress($"Test run started for '{testRunStartedEvent.Path}'");
         }
     }
 }

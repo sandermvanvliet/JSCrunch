@@ -5,7 +5,7 @@ using JSCrunch.Core.Events;
 
 namespace JSCrunch
 {
-    public class FileChangedEventListener : ISubscribable
+    public class FileChangedEventListener : ISubscribable<FileChangedEvent>
     {
         private readonly EventQueue _eventQueue;
         private readonly Configurator _configurator;
@@ -18,13 +18,9 @@ namespace JSCrunch
 
         public Type ForEventType => typeof(FileChangedEvent);
 
-        public void Publish(Event eventInstance)
+        public void Publish(FileChangedEvent fileChangedEvent)
         {
-            var fileChangedEvent = eventInstance as FileChangedEvent;
-            if (fileChangedEvent != null)
-            {
-                InvokeTestRunnerOn(fileChangedEvent.Path);
-            }
+            InvokeTestRunnerOn(fileChangedEvent.Path);
         }
 
         private void InvokeTestRunnerOn(string path)

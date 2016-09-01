@@ -4,7 +4,7 @@ using JSCrunch.Core.Events;
 
 namespace JSCrunch.VisualStudio.Listeners
 {
-    public class SolutionOpenedListener : ISubscribable
+    public class SolutionOpenedListener : ISubscribable<SolutionOpenedEvent>
     {
         private readonly EventQueue _eventQueue;
 
@@ -15,13 +15,8 @@ namespace JSCrunch.VisualStudio.Listeners
 
         public Type ForEventType => typeof(SolutionOpenedEvent);
 
-        public void Publish(Event eventInstance)
+        public void Publish(SolutionOpenedEvent eventInstance)
         {
-            var solutionLoadedEvent = eventInstance as SolutionOpenedEvent;
-
-            if (solutionLoadedEvent == null)
-            {
-            }
         }
     }
 }
