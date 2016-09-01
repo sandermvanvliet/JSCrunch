@@ -1,7 +1,5 @@
 using System;
-using System.Diagnostics;
 using JSCrunch.Core;
-using JSCrunch.Core.Events;
 using JSCrunch.VisualStudio.Events;
 
 namespace JSCrunch.VisualStudio.Listeners
@@ -16,13 +14,11 @@ namespace JSCrunch.VisualStudio.Listeners
         }
 
         public Type ForEventType => typeof(ProjectLoadedEvent);
-        
+
         public void Publish(ProjectLoadedEvent projectLoadedEvent)
         {
-            Debug.WriteLine("Discovering tests in project " + projectLoadedEvent.Project.GetProjectName());
-
-            _eventQueue.Enqueue(new DiscoverTestsEvent());
-            _eventQueue.Enqueue(new DiscoverTestrunnerEvent());
+            _eventQueue.Enqueue(new DiscoverTestsEvent(projectLoadedEvent.Project));
+            _eventQueue.Enqueue(new DiscoverTestrunnerEvent(projectLoadedEvent.Project));
         }
     }
 }
