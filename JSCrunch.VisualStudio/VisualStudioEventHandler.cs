@@ -65,7 +65,7 @@ namespace JSCrunch.VisualStudio
         {
             var currentSolution = _visualStudioServiceProvider.GetService(typeof(SVsSolution)) as IVsSolution;
             
-            _eventQueue.Enqueue(new SolutionLoadedEvent(currentSolution));
+            _eventQueue.Enqueue(new SolutionOpenedEvent(currentSolution));
 
             return VSConstants.S_OK;
         }

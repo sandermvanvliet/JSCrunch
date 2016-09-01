@@ -2,9 +2,9 @@
 
 namespace JSCrunch.Core.Events
 {
-    public class SolutionLoadedEvent : JSCrunch.Core.Events.Event
+    public class SolutionOpenedEvent : JSCrunch.Core.Events.Event
     {
-        public SolutionLoadedEvent(IVsSolution solution)
+        public SolutionOpenedEvent(IVsSolution solution)
         {
             Solution = solution;
         }

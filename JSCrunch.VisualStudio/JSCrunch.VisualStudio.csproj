@@ -61,7 +61,7 @@
     </Compile>
     <Compile Include="ProcessingQueuePackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SolutionLoadedListener.cs" />
+    <Compile Include="SolutionOpenedListener.cs" />
     <Compile Include="VisualStudioEventHandler.cs" />
     <Compile Include="VSExtensions.cs" />
   </ItemGroup>

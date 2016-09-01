@@ -10,19 +10,18 @@ using NSubstitute;
 namespace JSCrunch.VisualStudio.Tests
 {
     [TestClass]
-    public class WhenASolutionIsLoaded
+    public class WhenAProjectIsLoaded
     {
         [TestMethod]
-        public void ThenASolutionLoadedEventIsQueued()
+        public void ThenADiscoverTestsEventIsQueued()
         {
-            var processingQueue = new List<ProcessingItem>();
             var eventQueue = new EventQueue();
-            var handler = new VisualStudioEventHandler(processingQueue, eventQueue, Substitute.For<IServiceProvider>());
+            var eventHandler = new VisualStudioEventHandler(new List<ProcessingItem>(), eventQueue, Substitute.For<IServiceProvider>());
 
-            handler.OnAfterOpenSolution(null, 0);
+            eventHandler.OnAfterLoadProject(null, null);
 
             eventQueue
-                .OfType<SolutionLoadedEvent>()
+                .OfType<DiscoverTestsEvent>()
                 .Should()
                 .HaveCount(1);
         }
