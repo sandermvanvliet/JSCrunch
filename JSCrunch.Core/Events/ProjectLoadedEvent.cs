@@ -2,11 +2,11 @@ using Microsoft.VisualStudio.Shell.Interop;
 
 namespace JSCrunch.Core.Events
 {
-    public class DiscoverTestsEvent : Event
+    public class ProjectLoadedEvent : Event
     {
         public IVsProject Project { get; }
 
-        public DiscoverTestsEvent(IVsProject project)
+        public ProjectLoadedEvent(IVsProject project)
         {
             Project = project;
         }

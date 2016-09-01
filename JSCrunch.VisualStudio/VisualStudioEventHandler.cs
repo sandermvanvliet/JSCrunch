@@ -50,7 +50,7 @@ namespace JSCrunch.VisualStudio
 
         public int OnAfterLoadProject(IVsHierarchy pStubHierarchy, IVsHierarchy pRealHierarchy)
         {
-            _eventQueue.Enqueue(new DiscoverTestsEvent(pRealHierarchy as IVsProject));
+            _eventQueue.Enqueue(new ProjectLoadedEvent(pRealHierarchy as IVsProject));
 
             return VSConstants.S_OK;
         }
@@ -118,7 +118,7 @@ namespace JSCrunch.VisualStudio
 
             foreach (var project in projects)
             {
-                _eventQueue.Enqueue(new DiscoverTestsEvent(project));
+                _eventQueue.Enqueue(new ProjectLoadedEvent(project));
             }
 
             return VSConstants.S_OK;

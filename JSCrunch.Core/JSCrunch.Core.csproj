@@ -76,7 +76,7 @@
   <ItemGroup>
     <Compile Include="ApplicationDateTime.cs" />
     <Compile Include="EventQueue.cs" />
-    <Compile Include="Events\DiscoverTestsEvent.cs" />
+    <Compile Include="Events\ProjectLoadedEvent.cs" />
     <Compile Include="Events\Event.cs" />
     <Compile Include="Events\FileChangedEvent.cs" />
     <Compile Include="Events\ListenerSubscribedEvent.cs" />

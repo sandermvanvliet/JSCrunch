@@ -2,7 +2,7 @@
 using JSCrunch.Core;
 using JSCrunch.Core.Events;
 
-namespace JSCrunch.VisualStudio
+namespace JSCrunch.VisualStudio.Listeners
 {
     public class SolutionOpenedListener : ISubscribable
     {

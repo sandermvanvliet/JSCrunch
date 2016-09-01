@@ -13,7 +13,7 @@ namespace JSCrunch.VisualStudio.Tests
     public class WhenProjectsAreLoadedInBatch
     {
         [TestMethod]
-        public void ThenADiscoverTestsEventIsQueuedForLoadedProjects()
+        public void ThenAProjectLoadedEventIsQueuedForLoadedProjects()
         {
             var eventQueue = new EventQueue();
             var solutionDouble = new VsSolutionDouble();
@@ -27,7 +27,7 @@ namespace JSCrunch.VisualStudio.Tests
             eventHandler.OnAfterLoadProjectBatch(true);
 
             eventQueue
-                .OfType<DiscoverTestsEvent>()
+                .OfType<ProjectLoadedEvent>()
                 .Should()
                 .HaveCount(1);
         }

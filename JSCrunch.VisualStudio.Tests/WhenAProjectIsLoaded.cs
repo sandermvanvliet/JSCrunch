@@ -21,7 +21,7 @@ namespace JSCrunch.VisualStudio.Tests
             eventHandler.OnAfterLoadProject(null, null);
 
             eventQueue
-                .OfType<DiscoverTestsEvent>()
+                .OfType<ProjectLoadedEvent>()
                 .Should()
                 .HaveCount(1);
         }
