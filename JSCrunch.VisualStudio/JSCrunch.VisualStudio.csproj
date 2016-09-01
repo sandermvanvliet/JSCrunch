@@ -56,7 +56,7 @@
     <Compile Include="Listeners\ProjectLoadedListener.cs" />
     <Compile Include="Listeners\SolutionOpenedListener.cs" />
     <Compile Include="ProcessingItem.cs" />
-    <Compile Include="ProcessingQueueToolWindow.cs" />
+    <Compile Include="EventLogToolWindow.cs" />
     <Compile Include="ProcessingQueueCommand.cs" />
     <Compile Include="EventLogControl.xaml.cs">
       <DependentUpon>EventLogControl.xaml</DependentUpon>

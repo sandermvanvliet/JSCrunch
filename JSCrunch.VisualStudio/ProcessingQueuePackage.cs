@@ -42,7 +42,7 @@ namespace JSCrunch.VisualStudio
     [PackageRegistration(UseManagedResourcesOnly = true)]
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)] // Info on this package for Help/About
     [ProvideMenuResource("Menus.ctmenu", 1)]
-    [ProvideToolWindow(typeof(ProcessingQueueToolWindow))]
+    [ProvideToolWindow(typeof(EventLogToolWindow))]
     [Guid(ProcessingQueuePackage.PackageGuidString)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
     [ProvideAutoLoad(UIContextGuids80.SolutionExists)]
@@ -56,7 +56,7 @@ namespace JSCrunch.VisualStudio
         public const string PackageGuidString = "33b97e83-89d6-441d-ad4e-9e7dc0f828d1";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProcessingQueueToolWindow"/> class.
+        /// Initializes a new instance of the <see cref="EventLogToolWindow"/> class.
         /// </summary>
         public ProcessingQueuePackage()
         {
