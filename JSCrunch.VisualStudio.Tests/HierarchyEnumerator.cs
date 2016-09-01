@@ -27,16 +27,19 @@ namespace JSCrunch.VisualStudio.Tests
             {
                 pceltFetched = 0;
 
-                return VSConstants.S_OK;
+                return VSConstants.S_FALSE;
             }
 
+            var remainingNumberOfProjects = _projects.Count() - pointer;
 
-            pceltFetched = (uint)(_projects.Count() - pointer);
+            pceltFetched = (uint)Math.Min(remainingNumberOfProjects, celt);
 
             for (var i = 0; i < pceltFetched; i++)
             {
                 rgelt[i] = _projects.Skip(pointer).Take(1).Single();
             }
+
+            pointer += (int)pceltFetched;
 
             return VSConstants.S_OK;
         }

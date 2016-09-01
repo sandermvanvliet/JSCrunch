@@ -60,6 +60,7 @@
       <DependentUpon>ProcessingQueueControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ProcessingQueuePackage.cs" />
+    <Compile Include="DiscoverTestsListener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SolutionOpenedListener.cs" />
     <Compile Include="VisualStudioEventHandler.cs" />

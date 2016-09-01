@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using JSCrunch.Core;
 using JSCrunch.Core.Events;
 using Microsoft.VisualStudio;
@@ -7,7 +8,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 
 namespace JSCrunch.VisualStudio
 {
-    public class VisualStudioEventHandler : IVsSolutionEvents
+    public class VisualStudioEventHandler : IVsSolutionEvents, IVsSolutionLoadEvents
     {
         private readonly List<ProcessingItem> _processingQueue;
         private readonly EventQueue _eventQueue;
@@ -31,6 +32,9 @@ namespace JSCrunch.VisualStudio
 
         public int OnAfterOpenProject(IVsHierarchy pHierarchy, int fAdded)
         {
+            object name;
+            pHierarchy.GetProperty((uint)VSConstants.VSITEMID.Nil, (int)__VSHPROPID.VSHPROPID_Name, out name);
+            Debug.WriteLine("OnAfterOpenProject: " + name);
             return VSConstants.S_OK;
         }
 
@@ -46,7 +50,7 @@ namespace JSCrunch.VisualStudio
 
         public int OnAfterLoadProject(IVsHierarchy pStubHierarchy, IVsHierarchy pRealHierarchy)
         {
-            _eventQueue.Enqueue(new DiscoverTestsEvent(null));
+            _eventQueue.Enqueue(new DiscoverTestsEvent(pRealHierarchy as IVsProject));
 
             return VSConstants.S_OK;
         }
@@ -81,6 +85,46 @@ namespace JSCrunch.VisualStudio
         }
 
         public int OnAfterCloseSolution(object pUnkReserved)
+        {
+            return VSConstants.S_OK;
+        }
+
+        public int OnBeforeOpenSolution(string pszSolutionFilename)
+        {
+            return VSConstants.S_OK;
+        }
+
+        public int OnBeforeBackgroundSolutionLoadBegins()
+        {
+            return VSConstants.S_OK;
+        }
+
+        public int OnQueryBackgroundLoadProjectBatch(out bool pfShouldDelayLoadToNextIdle)
+        {
+            pfShouldDelayLoadToNextIdle = false;
+
+            return VSConstants.S_OK;
+        }
+
+        public int OnBeforeLoadProjectBatch(bool fIsBackgroundIdleBatch)
+        {
+            return VSConstants.S_OK;
+        }
+
+        public int OnAfterLoadProjectBatch(bool fIsBackgroundIdleBatch)
+        {
+            var solution = _visualStudioServiceProvider.GetService(typeof(SVsSolution)) as IVsSolution;
+            var projects = solution.GetLoadedProjects();
+
+            foreach (var project in projects)
+            {
+                _eventQueue.Enqueue(new DiscoverTestsEvent(project));
+            }
+
+            return VSConstants.S_OK;
+        }
+
+        public int OnAfterBackgroundSolutionLoadComplete()
         {
             return VSConstants.S_OK;
         }

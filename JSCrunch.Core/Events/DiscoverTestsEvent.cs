@@ -4,11 +4,11 @@ namespace JSCrunch.Core.Events
 {
     public class DiscoverTestsEvent : Event
     {
-        private readonly IVsProject _webProject;
+        public IVsProject Project { get; }
 
-        public DiscoverTestsEvent(IVsProject webProject)
+        public DiscoverTestsEvent(IVsProject project)
         {
-            _webProject = webProject;
+            Project = project;
         }
     }
 }
