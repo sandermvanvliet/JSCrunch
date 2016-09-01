@@ -24,9 +24,8 @@
         <ListView ItemsSource="{Binding Collection}" Name="ListViewItems">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Action" Width="100" DisplayMemberBinding="{Binding Path=Action}" />
+                    <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Path=Name}" />
                     <GridViewColumn Header="Timestamp" Width="Auto" DisplayMemberBinding="{Binding Path=Timestamp}" />
-                    <GridViewColumn Header="Status" Width="Auto" DisplayMemberBinding="{Binding Path=Status}" />
                 </GridView>
             </ListView.View>
         </ListView>

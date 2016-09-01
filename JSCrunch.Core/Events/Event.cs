@@ -10,5 +10,6 @@ namespace JSCrunch.Core.Events
         }
 
         public DateTime Timestamp { get; private set; }
+        public string Name => GetType().Name;
     }
 }

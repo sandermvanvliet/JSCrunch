@@ -5,11 +5,11 @@
 //------------------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using JSCrunch.Core;
+using JSCrunch.Core.Events;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
@@ -21,42 +21,49 @@ namespace JSCrunch.VisualStudio
     /// <summary>
     ///     Interaction logic for ProcessingQueueControl.
     /// </summary>
-    public partial class ProcessingQueueControl : UserControl, IVsRunningDocTableEvents
+    public partial class ProcessingQueueControl : UserControl, IVsRunningDocTableEvents, ISubscribable<Event>
     {
+        private EventQueue _eventQueue;
+        private MsVsShell.RunningDocumentTable _rdt;
         private uint _rdtCookie;
-        private RunningDocumentTable _rdt;
-
-        public ObservableCollection<ProcessingItem> Collection { get; private set; }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="ProcessingQueueControl" /> class.
         /// </summary>
         public ProcessingQueueControl()
         {
-            Collection = new ObservableCollection<ProcessingItem>();
+            Collection = new ObservableCollection<Event>();
             DataContext = this;
             InitializeComponent();
         }
 
-        private void ProcessingQueueControl_OnLoaded(object sender, RoutedEventArgs e)
+        public ObservableCollection<Event> Collection { get; }
+
+        public Type ForEventType => typeof(Event);
+
+        public EventQueue EventQueue
         {
-            var serviceProvider = Package.GetGlobalService(typeof(IOleServiceProvider)) as IOleServiceProvider;
-            if (serviceProvider == null)
+            get { return _eventQueue; }
+            set
             {
-                return;
+                _eventQueue = value;
+                _eventQueue.Subscribe(this);
             }
-
-            _rdt = new RunningDocumentTable(new ServiceProvider(serviceProvider));
-
-            _rdtCookie = _rdt.Advise(this);
         }
 
-        public int OnAfterFirstDocumentLock(uint docCookie, uint dwRDTLockType, uint dwReadLocksRemaining, uint dwEditLocksRemaining)
+        public void Publish(Event eventInstance)
+        {
+            Collection.Add(eventInstance);
+        }
+
+        public int OnAfterFirstDocumentLock(uint docCookie, uint dwRDTLockType, uint dwReadLocksRemaining,
+            uint dwEditLocksRemaining)
         {
             return VSConstants.S_OK;
         }
 
-        public int OnBeforeLastDocumentUnlock(uint docCookie, uint dwRDTLockType, uint dwReadLocksRemaining, uint dwEditLocksRemaining)
+        public int OnBeforeLastDocumentUnlock(uint docCookie, uint dwRDTLockType, uint dwReadLocksRemaining,
+            uint dwEditLocksRemaining)
         {
             return VSConstants.S_OK;
         }
@@ -75,22 +82,6 @@ namespace JSCrunch.VisualStudio
             return VSConstants.S_OK;
         }
 
-        private void AddItemToQueue(string fileName)
-        {
-            var processingItem = new ProcessingItem
-            {
-                Action = "FileSave",
-                Status = "Queued",
-                Timestamp = DateTime.UtcNow,
-                FileName = fileName
-            };
-
-            ThreadPool.QueueUserWorkItem(x =>
-            {
-                Dispatcher.Invoke(() => Collection.Add(processingItem));
-            });
-        }
-
         public int OnAfterAttributeChange(uint docCookie, uint grfAttribs)
         {
             return VSConstants.S_OK;
@@ -104,6 +95,36 @@ namespace JSCrunch.VisualStudio
         public int OnAfterDocumentWindowHide(uint docCookie, IVsWindowFrame pFrame)
         {
             return VSConstants.S_OK;
+        }
+
+        private void ProcessingQueueControl_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            var oleServiceProvider =
+                MsVsShell.Package.GetGlobalService(typeof(IOleServiceProvider)) as IOleServiceProvider;
+            if (oleServiceProvider == null)
+            {
+                return;
+            }
+
+            _rdt = new MsVsShell.RunningDocumentTable(new MsVsShell.ServiceProvider(oleServiceProvider));
+
+            _rdtCookie = _rdt.Advise(this);
+        }
+
+        private void AddItemToQueue(string fileName)
+        {
+            //var processingItem = new ProcessingItem
+            //{
+            //    Action = "FileSave",
+            //    Status = "Queued",
+            //    Timestamp = DateTime.UtcNow,
+            //    FileName = fileName
+            //};
+
+            //ThreadPool.QueueUserWorkItem(x =>
+            //{
+            //    Dispatcher.Invoke(() => Collection.Add(processingItem));
+            //});
         }
     }
 }

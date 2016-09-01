@@ -48,7 +48,6 @@ namespace JSCrunch.VisualStudio
     [ProvideAutoLoad(UIContextGuids80.SolutionExists)]
     public sealed class ProcessingQueuePackage : Package
     {
-        private VisualStudioEventHandler eventHandler;
         private uint solutionEventsCookie;
         private IUnityContainer dependencyContainer;
 
@@ -83,7 +82,7 @@ namespace JSCrunch.VisualStudio
             InitializeListeners.FromAssembly(dependencyContainer, typeof(EventQueue).Assembly);
             InitializeListeners.FromAssembly(dependencyContainer, this.GetType().Assembly);
 
-            eventHandler = dependencyContainer.Resolve<VisualStudioEventHandler>();
+            var eventHandler = dependencyContainer.Resolve<VisualStudioEventHandler>();
             
             ProcessingQueueCommand.Initialize(this);
             base.Initialize();

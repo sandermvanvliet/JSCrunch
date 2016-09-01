@@ -4,11 +4,15 @@
 // </copyright>
 //------------------------------------------------------------------------------
 
+using JSCrunch.Core;
+using Microsoft.Practices.Unity;
+
 namespace JSCrunch.VisualStudio
 {
     using System;
     using System.Runtime.InteropServices;
     using Microsoft.VisualStudio.Shell;
+    using IOleServiceProvider = Microsoft.VisualStudio.OLE.Interop.IServiceProvider;
 
     /// <summary>
     /// This class implements the tool window exposed by this package and hosts a user control.
@@ -22,7 +26,7 @@ namespace JSCrunch.VisualStudio
     /// </para>
     /// </remarks>
     [Guid("339e2369-e379-4057-96db-83d3a6e2b2f5")]
-    public class ProcessingQueueToolWindow : ToolWindowPane
+    public sealed class ProcessingQueueToolWindow : ToolWindowPane
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProcessingQueueToolWindow"/> class.
@@ -34,7 +38,15 @@ namespace JSCrunch.VisualStudio
             // This is the user control hosted by the tool window; Note that, even if this class implements IDisposable,
             // we are not calling Dispose on this object. This is because ToolWindowPane calls Dispose on
             // the object returned by the Content property.
-            this.Content = new ProcessingQueueControl();
+
+            Content = new ProcessingQueueControl();
+        }
+
+        public override void OnToolWindowCreated()
+        {
+            var unityContainer = ((IServiceProvider) Package).GetService(typeof(IUnityContainer)) as IUnityContainer;
+            var eventQueue = unityContainer.Resolve<EventQueue>();
+            ((ProcessingQueueControl) Content).EventQueue = eventQueue;
         }
     }
 }
