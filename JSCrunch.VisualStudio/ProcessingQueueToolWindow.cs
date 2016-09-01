@@ -12,7 +12,6 @@ namespace JSCrunch.VisualStudio
     using System;
     using System.Runtime.InteropServices;
     using Microsoft.VisualStudio.Shell;
-    using IOleServiceProvider = Microsoft.VisualStudio.OLE.Interop.IServiceProvider;
 
     /// <summary>
     /// This class implements the tool window exposed by this package and hosts a user control.
