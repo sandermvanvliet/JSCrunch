@@ -49,7 +49,6 @@ namespace JSCrunch.VisualStudio
     public sealed class ProcessingQueuePackage : Package
     {
         private uint solutionEventsCookie;
-        private IUnityContainer dependencyContainer;
 
         /// <summary>
         /// ProcessingQueuePackage GUID string.
@@ -77,19 +76,18 @@ namespace JSCrunch.VisualStudio
             // It's because we're dependant on the IServiceProvider which isn't
             // created until the package is loaded within the VS environment so
             // that's why this initialization is done here
-            dependencyContainer = Bootstrapper.Initialize(this);
+            var dependencyContainer = Bootstrapper.Initialize(this);
 
             InitializeListeners.FromAssembly(dependencyContainer, typeof(EventQueue).Assembly);
             InitializeListeners.FromAssembly(dependencyContainer, this.GetType().Assembly);
-
-            var eventHandler = dependencyContainer.Resolve<VisualStudioEventHandler>();
             
             ProcessingQueueCommand.Initialize(this);
             base.Initialize();
 
             // Subscribe to solution loaded/unloaded events
             var solution = GetService(typeof(SVsSolution)) as IVsSolution;
-
+            
+            var eventHandler = dependencyContainer.Resolve<VisualStudioEventHandler>();
             solution.AdviseSolutionEvents(eventHandler, out solutionEventsCookie);
         }
 
