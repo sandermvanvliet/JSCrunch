@@ -1,6 +1,7 @@
 ﻿using System;
 using JSCrunch.Core;
 using JSCrunch.Core.Events;
+using JSCrunch.VisualStudio.Events;
 
 namespace JSCrunch.VisualStudio.Listeners
 {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using JSCrunch.Core;
 using JSCrunch.Core.Events;
+using JSCrunch.VisualStudio.Events;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
 

@@ -53,6 +53,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Events\DiscoverTestrunnerEvent.cs" />
+    <Compile Include="Events\DiscoverTestsEvent.cs" />
+    <Compile Include="Events\ProjectLoadedEvent.cs" />
+    <Compile Include="Events\SolutionOpenedEvent.cs" />
     <Compile Include="Listeners\ProjectLoadedListener.cs" />
     <Compile Include="Listeners\SolutionOpenedListener.cs" />
     <Compile Include="ProcessingItem.cs" />

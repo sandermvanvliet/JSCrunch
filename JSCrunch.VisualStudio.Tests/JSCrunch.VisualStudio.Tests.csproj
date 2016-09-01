@@ -136,6 +136,7 @@
     <Compile Include="WhenADocumentIsSaved.cs" />
     <Compile Include="WhenAnUnchangedDocumentIsSaved.cs" />
     <Compile Include="WhenAProjectIsLoaded.cs" />
+    <Compile Include="WhenAProjectLoadedEventIsHandled.cs" />
     <Compile Include="WhenASolutionIsOpened.cs" />
     <Compile Include="WhenProjectsAreLoadedInBatch.cs" />
   </ItemGroup>

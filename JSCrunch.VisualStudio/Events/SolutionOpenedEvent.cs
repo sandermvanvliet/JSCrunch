@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.Shell.Interop;
 
-namespace JSCrunch.Core.Events
+namespace JSCrunch.VisualStudio.Events
 {
     public class SolutionOpenedEvent : JSCrunch.Core.Events.Event
     {

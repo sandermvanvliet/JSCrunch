@@ -1,6 +1,7 @@
+using JSCrunch.Core.Events;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace JSCrunch.Core.Events
+namespace JSCrunch.VisualStudio.Events
 {
     public class ProjectLoadedEvent : Event
     {
