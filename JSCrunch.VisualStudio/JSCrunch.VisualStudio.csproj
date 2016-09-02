@@ -58,6 +58,7 @@
     <Compile Include="Events\ProjectLoadedEvent.cs" />
     <Compile Include="Events\SolutionOpenedEvent.cs" />
     <Compile Include="Events\TestRunnerAvailableEvent.cs" />
+    <Compile Include="Events\TestsFoundEvent.cs" />
     <Compile Include="FileSystem.cs" />
     <Compile Include="IFileSystem.cs" />
     <Compile Include="Listeners\DiscoverTestrunnerListener.cs" />

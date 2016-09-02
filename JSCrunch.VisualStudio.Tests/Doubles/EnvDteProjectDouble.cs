@@ -10,6 +10,7 @@ namespace JSCrunch.VisualStudio.Tests.Doubles
         public EnvDteProjectDouble(VsProjectDouble vsProjectDouble)
         {
             _vsProjectDouble = vsProjectDouble;
+            ProjectItems = new ProjectItemsDouble();
         }
 
         public void SaveAs(string NewFileName)

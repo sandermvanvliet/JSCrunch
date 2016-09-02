@@ -91,19 +91,19 @@ namespace JSCrunch.VisualStudio
             return GetProjectItems((IVsHierarchy) project, VSConstants.VSITEMID_ROOT);
         }
 
-        public static IEnumerable<string> GetProjectItems(IVsHierarchy project, uint itemId)
+        public static IEnumerable<string> GetProjectItems(IVsHierarchy hierarchy, uint itemId)
         {
-            var pVar = GetPropertyValue(project, (int) __VSHPROPID.VSHPROPID_FirstChild, itemId);
+            var pVar = GetPropertyValue(hierarchy, (int) __VSHPROPID.VSHPROPID_FirstChild, itemId);
 
             var childId = GetItemId(pVar);
             while (childId != VSConstants.VSITEMID_NIL)
             {
-                var childPath = GetCanonicalName(childId, project);
+                var childPath = GetCanonicalName(childId, hierarchy);
                 yield return childPath;
 
-                foreach (var childNodePath in GetProjectItems(project, childId)) yield return childNodePath;
+                foreach (var childNodePath in GetProjectItems(hierarchy, childId)) yield return childNodePath;
 
-                pVar = GetPropertyValue(project, (int) __VSHPROPID.VSHPROPID_NextSibling, childId);
+                pVar = GetPropertyValue(hierarchy, (int) __VSHPROPID.VSHPROPID_NextSibling, childId);
                 childId = GetItemId(pVar);
             }
         }

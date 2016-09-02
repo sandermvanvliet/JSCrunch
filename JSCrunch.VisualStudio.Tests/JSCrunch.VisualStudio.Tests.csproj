@@ -147,6 +147,8 @@
   <ItemGroup>
     <Compile Include="Doubles\EnvDteProjectDouble.cs" />
     <Compile Include="Doubles\HierarchyEnumerator.cs" />
+    <Compile Include="Doubles\ProjectItemDouble.cs" />
+    <Compile Include="Doubles\ProjectItemsDouble.cs" />
     <Compile Include="Doubles\VsPackageInstallerServicesDouble.cs" />
     <Compile Include="Doubles\VsProjectDouble.cs" />
     <Compile Include="Doubles\VsSolutionDouble.cs" />
