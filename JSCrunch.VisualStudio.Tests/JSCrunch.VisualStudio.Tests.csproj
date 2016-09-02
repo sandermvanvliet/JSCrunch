@@ -157,6 +157,7 @@
     <Compile Include="WhenAProjectIsLoaded.cs" />
     <Compile Include="WhenAProjectLoadedEventIsHandled.cs" />
     <Compile Include="WhenASolutionIsOpened.cs" />
+    <Compile Include="WhenDiscoveringTests.cs" />
     <Compile Include="WhenProjectsAreLoadedInBatch.cs" />
   </ItemGroup>
   <ItemGroup>
