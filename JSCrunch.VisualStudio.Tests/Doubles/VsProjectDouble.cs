@@ -4,7 +4,7 @@ using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
 using IServiceProvider = Microsoft.VisualStudio.OLE.Interop.IServiceProvider;
 
-namespace JSCrunch.VisualStudio.Tests
+namespace JSCrunch.VisualStudio.Tests.Doubles
 {
     public class VsProjectDouble : IVsProject, IVsHierarchy
     {

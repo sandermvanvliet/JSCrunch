@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
-using NSubstitute;
 
-namespace JSCrunch.VisualStudio.Tests
+namespace JSCrunch.VisualStudio.Tests.Doubles
 {
     public class VsSolutionDouble : IVsSolution
     {

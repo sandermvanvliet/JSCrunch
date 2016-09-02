@@ -139,12 +139,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="EnvDteProjectDouble.cs" />
-    <Compile Include="HierarchyEnumerator.cs" />
+    <Compile Include="Doubles\EnvDteProjectDouble.cs" />
+    <Compile Include="Doubles\HierarchyEnumerator.cs" />
+    <Compile Include="Doubles\VsPackageInstallerServicesDouble.cs" />
+    <Compile Include="Doubles\VsProjectDouble.cs" />
+    <Compile Include="Doubles\VsSolutionDouble.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VsPackageInstallerServicesDouble.cs" />
-    <Compile Include="VsProjectDouble.cs" />
-    <Compile Include="VsSolutionDouble.cs" />
     <Compile Include="WhenADiscoverTestrunnerEventIsHandled.cs" />
     <Compile Include="WhenADocumentIsSaved.cs" />
     <Compile Include="WhenAnUnchangedDocumentIsSaved.cs" />

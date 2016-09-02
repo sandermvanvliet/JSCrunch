@@ -3,6 +3,7 @@ using FluentAssertions;
 using JSCrunch.Core;
 using JSCrunch.VisualStudio.Events;
 using JSCrunch.VisualStudio.Listeners;
+using JSCrunch.VisualStudio.Tests.Doubles;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace JSCrunch.VisualStudio.Tests

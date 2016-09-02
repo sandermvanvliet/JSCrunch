@@ -4,6 +4,7 @@ using FluentAssertions;
 using JSCrunch.Core;
 using JSCrunch.Core.Events;
 using JSCrunch.VisualStudio.Events;
+using JSCrunch.VisualStudio.Tests.Doubles;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;

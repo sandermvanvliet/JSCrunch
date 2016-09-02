@@ -1,7 +1,7 @@
 using System;
 using EnvDTE;
 
-namespace JSCrunch.VisualStudio.Tests
+namespace JSCrunch.VisualStudio.Tests.Doubles
 {
     public class EnvDteProjectDouble : EnvDTE.Project
     {

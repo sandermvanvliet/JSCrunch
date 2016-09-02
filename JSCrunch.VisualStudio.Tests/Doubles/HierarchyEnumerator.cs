@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace JSCrunch.VisualStudio.Tests
+namespace JSCrunch.VisualStudio.Tests.Doubles
 {
     public class HierarchyEnumerator : IEnumHierarchies
     {

@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using EnvDTE;
 using NuGet;
 using NuGet.VisualStudio;
 
-namespace JSCrunch.VisualStudio.Tests
+namespace JSCrunch.VisualStudio.Tests.Doubles
 {
     public class VsPackageInstallerServicesDouble : IVsPackageInstallerServices
     {
