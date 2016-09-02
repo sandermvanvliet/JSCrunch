@@ -1,4 +1,5 @@
-﻿using JSCrunch.Core.Events;
+﻿using System.IO;
+using JSCrunch.Core.Events;
 
 namespace JSCrunch.VisualStudio.Events
 {

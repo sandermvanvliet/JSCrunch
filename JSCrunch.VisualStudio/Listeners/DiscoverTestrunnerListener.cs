@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using JSCrunch.Core;
 using JSCrunch.VisualStudio.Events;
@@ -33,7 +34,9 @@ namespace JSCrunch.VisualStudio.Listeners
             var chutzpahPackage = packages.SingleOrDefault(p => p.Id.Contains("Chutzpah"));
             if (chutzpahPackage != null)
             {
-                _eventQueue.Enqueue(new TestRunnerAvailableEvent(chutzpahPackage.InstallPath));
+                var testRunnerPath = Path.Combine(chutzpahPackage.InstallPath, "tools", "chutzpah.console.exe");
+
+                _eventQueue.Enqueue(new TestRunnerAvailableEvent(testRunnerPath));
             }
         }
     }
