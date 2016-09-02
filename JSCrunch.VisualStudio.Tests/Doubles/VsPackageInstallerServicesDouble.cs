@@ -36,15 +36,15 @@ namespace JSCrunch.VisualStudio.Tests.Doubles
             throw new NotImplementedException();
         }
 
-        public void Add(string id, string title, string installPath)
+        public void Add(string id, string version, string title, string installPath)
         {
-            _packages.Add(new VsPackageMetadata {Id = id, Title = title, InstallPath = installPath});
+            _packages.Add(new VsPackageMetadata {Id = id, Version = SemanticVersion.Parse(version), Title = title, InstallPath = installPath});
         }
 
         private class VsPackageMetadata : IVsPackageMetadata
         {
             public string Id { get; set; }
-            public SemanticVersion Version { get; }
+            public SemanticVersion Version { get; set; }
             public string Title { get; set; }
             public string Description { get; }
             public IEnumerable<string> Authors { get; }
