@@ -1,47 +1,29 @@
 using System;
+using System.Collections.Generic;
+using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
+using IServiceProvider = Microsoft.VisualStudio.OLE.Interop.IServiceProvider;
 
 namespace JSCrunch.VisualStudio.Tests
 {
     public class VsProjectDouble : IVsProject, IVsHierarchy
     {
-        public int IsDocumentInProject(string pszMkDocument, out int pfFound, VSDOCUMENTPRIORITY[] pdwPriority, out uint pitemid)
+        private readonly Dictionary<string, string> _files = new Dictionary<string, string>();
+        private readonly Dictionary<__VSHPROPID, object> _properties = new Dictionary<__VSHPROPID, object>();
+
+        public VsProjectDouble()
+        {
+            _properties.Add(__VSHPROPID.VSHPROPID_Name, "TestProject");
+            _properties.Add(__VSHPROPID.VSHPROPID_ProjectDir, "c:\\temp\\TestProject");
+            _properties.Add(__VSHPROPID.VSHPROPID_ExtObject, new EnvDteProjectDouble(this));
+        }
+
+        public int SetSite(IServiceProvider psp)
         {
             throw new NotImplementedException();
         }
 
-        public int GetMkDocument(uint itemid, out string pbstrMkDocument)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int OpenItem(uint itemid, ref Guid rguidLogicalView, IntPtr punkDocDataExisting, out IVsWindowFrame ppWindowFrame)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GetItemContext(uint itemid, out Microsoft.VisualStudio.OLE.Interop.IServiceProvider ppSP)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GenerateUniqueItemName(uint itemidLoc, string pszExt, string pszSuggestedRoot, out string pbstrItemName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int AddItem(uint itemidLoc, VSADDITEMOPERATION dwAddItemOperation, string pszItemName, uint cFilesToOpen,
-            string[] rgpszFilesToOpen, IntPtr hwndDlgOwner, VSADDRESULT[] pResult)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int SetSite(Microsoft.VisualStudio.OLE.Interop.IServiceProvider psp)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GetSite(out Microsoft.VisualStudio.OLE.Interop.IServiceProvider ppSP)
+        public int GetSite(out IServiceProvider ppSP)
         {
             throw new NotImplementedException();
         }
@@ -68,7 +50,16 @@ namespace JSCrunch.VisualStudio.Tests
 
         public int GetProperty(uint itemid, int propid, out object pvar)
         {
-            throw new NotImplementedException();
+            var property = (__VSHPROPID) propid;
+
+            if (_properties.ContainsKey(property))
+            {
+                pvar = _properties[property];
+                return VSConstants.S_OK;
+            }
+
+            pvar = null;
+            return VSConstants.S_FALSE;
         }
 
         public int SetProperty(uint itemid, int propid, object var)
@@ -76,7 +67,8 @@ namespace JSCrunch.VisualStudio.Tests
             throw new NotImplementedException();
         }
 
-        public int GetNestedHierarchy(uint itemid, ref Guid iidHierarchyNested, out IntPtr ppHierarchyNested, out uint pitemidNested)
+        public int GetNestedHierarchy(uint itemid, ref Guid iidHierarchyNested, out IntPtr ppHierarchyNested,
+            out uint pitemidNested)
         {
             throw new NotImplementedException();
         }
@@ -124,6 +116,56 @@ namespace JSCrunch.VisualStudio.Tests
         public int Unused4()
         {
             throw new NotImplementedException();
+        }
+
+        public int IsDocumentInProject(string pszMkDocument, out int pfFound, VSDOCUMENTPRIORITY[] pdwPriority,
+            out uint pitemid)
+        {
+            if (_files.ContainsKey(pszMkDocument))
+            {
+                pfFound = 1;
+                pitemid = 1;
+            }
+            else
+            {
+                pfFound = 0;
+                pitemid = 0;
+            }
+
+            return VSConstants.S_OK;
+        }
+
+        public int GetMkDocument(uint itemid, out string pbstrMkDocument)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int OpenItem(uint itemid, ref Guid rguidLogicalView, IntPtr punkDocDataExisting,
+            out IVsWindowFrame ppWindowFrame)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetItemContext(uint itemid, out IServiceProvider ppSP)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GenerateUniqueItemName(uint itemidLoc, string pszExt, string pszSuggestedRoot,
+            out string pbstrItemName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int AddItem(uint itemidLoc, VSADDITEMOPERATION dwAddItemOperation, string pszItemName, uint cFilesToOpen,
+            string[] rgpszFilesToOpen, IntPtr hwndDlgOwner, VSADDRESULT[] pResult)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddFile(string filePath, string contents)
+        {
+            _files.Add(filePath, contents);
         }
     }
 }

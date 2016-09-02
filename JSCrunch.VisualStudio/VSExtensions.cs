@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using EnvDTE;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
 
@@ -172,13 +173,13 @@ namespace JSCrunch.VisualStudio
 
         public static string GetCanonicalName(uint itemId, IVsHierarchy hierarchy)
         {
-            var strRet = string.Empty;
+            var strRet = String.Empty;
             var hr = hierarchy.GetCanonicalName(itemId, out strRet);
 
             if (hr == VSConstants.E_NOTIMPL)
             {
                 // Special case E_NOTIMLP to avoid perf hit to throw an exception.
-                return string.Empty;
+                return String.Empty;
             }
             try
             {
@@ -186,11 +187,20 @@ namespace JSCrunch.VisualStudio
             }
             catch (COMException)
             {
-                strRet = string.Empty;
+                strRet = String.Empty;
             }
 
             // This could be in the case of S_OK, S_FALSE, etc.
             return strRet;
+        }
+
+        public static Project GetEnvDteProject(this IVsHierarchy projectHierarchy)
+        {
+            object propertyValue;
+
+            projectHierarchy.GetProperty(VSConstants.VSITEMID_ROOT, (int) __VSHPROPID.VSHPROPID_ExtObject, out propertyValue);
+
+            return propertyValue as Project;
         }
     }
 }
