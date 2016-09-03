@@ -66,6 +66,8 @@
     <Compile Include="Listeners\DiscoverTestsListener.cs" />
     <Compile Include="Listeners\ProjectLoadedListener.cs" />
     <Compile Include="Listeners\SolutionOpenedListener.cs" />
+    <Compile Include="Metadata\MetadataModel.cs" />
+    <Compile Include="Metadata\ProjectModel.cs" />
     <Compile Include="ProcessingItem.cs" />
     <Compile Include="EventLogToolWindow.cs" />
     <Compile Include="ProcessingQueueCommand.cs" />
