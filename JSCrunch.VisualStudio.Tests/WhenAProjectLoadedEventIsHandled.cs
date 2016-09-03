@@ -44,5 +44,16 @@ namespace JSCrunch.VisualStudio.Tests
                 .Should()
                 .HaveCount(1);
         }
+
+        [TestMethod]
+        public void ThenAnUpdateMetadataEventIsQueued()
+        {
+            _listener.Publish(new ProjectLoadedEvent(_project));
+
+            _eventQueue
+                .OfType<UpdateMetadataEvent>()
+                .Should()
+                .HaveCount(1);
+        }
     }
 }

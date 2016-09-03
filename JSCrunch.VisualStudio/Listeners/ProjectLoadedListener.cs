@@ -19,6 +19,7 @@ namespace JSCrunch.VisualStudio.Listeners
         {
             _eventQueue.Enqueue(new DiscoverTestsEvent(projectLoadedEvent.Project));
             _eventQueue.Enqueue(new DiscoverTestrunnerEvent(projectLoadedEvent.Project));
+            _eventQueue.Enqueue(new UpdateMetadataEvent());
         }
     }
 }
