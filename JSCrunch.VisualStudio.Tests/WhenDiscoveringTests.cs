@@ -89,5 +89,23 @@ namespace JSCrunch.VisualStudio.Tests
                 .Should()
                 .HaveCount(2);
         }
+
+        [TestMethod]
+        public void TheTestsFoundEventContainsTheProjectName()
+        {
+            var envDteProject = _project.GetEnvDteProject();
+            var testsFolder = envDteProject.ProjectItems.AddFolder("Tests");
+            testsFolder.ProjectItems.AddFromFile("A.Tests.ts");
+            testsFolder.ProjectItems.AddFromFile("B.Tests.ts");
+
+            _listener.Publish(new DiscoverTestsEvent(_project));
+
+            _eventQueue
+                .OfType<TestsFoundEvent>()
+                .Single()
+                .ProjectName
+                .Should()
+                .Be("TestProject");
+        }
     }
 }

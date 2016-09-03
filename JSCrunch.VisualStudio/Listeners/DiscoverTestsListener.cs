@@ -55,7 +55,7 @@ namespace JSCrunch.VisualStudio.Listeners
                     if (testRoot != null)
                     {
                         var tests = EnumerateTests(testRoot, ProjectConfiguration.TestPattern);
-                         _eventQueue.Enqueue(new TestsFoundEvent(tests));
+                         _eventQueue.Enqueue(new TestsFoundEvent(tests, eventInstance.Project.GetProjectName()));
                     }
                 }
             }
