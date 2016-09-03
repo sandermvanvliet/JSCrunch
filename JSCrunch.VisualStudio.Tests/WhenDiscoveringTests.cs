@@ -27,7 +27,7 @@ namespace JSCrunch.VisualStudio.Tests
             var fileSystem = Substitute.For<IFileSystem>();
             fileSystem
                 .GetContentsOf(Arg.Any<string>())
-                .Returns("<?xml version=\"1.0\"?><jscrunch><tests root=\"Tests\" pattern=\"*.Tests.ts\" /></jscrunch>");
+                .Returns("<?xml version=\"1.0\"?><jscrunch><tests root=\"Tests\" pattern=\".*\\.Tests\\.ts\" /></jscrunch>");
 
             _listener = new DiscoverTestsListener(_eventQueue, fileSystem);
         }
@@ -41,7 +41,7 @@ namespace JSCrunch.VisualStudio.Tests
                 .ProjectConfiguration
                 .TestPattern
                 .Should()
-                .Be("*.Tests.ts");
+                .Be(".*\\.Tests\\.ts");
         }
 
         [TestMethod]
