@@ -55,5 +55,18 @@ namespace JSCrunch.VisualStudio.Tests
                 .Should()
                 .HaveCount(1);
         }
+
+        [TestMethod]
+        public void TheUpdateMetadataEventContainsTheProjectName()
+        {
+            _listener.Publish(new ProjectLoadedEvent(_project));
+
+            _eventQueue
+                .OfType<UpdateMetadataEvent>()
+                .Single()
+                .ProjectName
+                .Should()
+                .Be("TestProject");
+        }
     }
 }
