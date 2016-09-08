@@ -2,7 +2,7 @@
 
 namespace JSCrunch.VisualStudio.Events
 {
-    public class SolutionOpenedEvent : JSCrunch.Core.Events.Event
+    public class SolutionOpenedEvent : UpdateMetadataEvent
     {
         public SolutionOpenedEvent(IVsSolution solution)
         {

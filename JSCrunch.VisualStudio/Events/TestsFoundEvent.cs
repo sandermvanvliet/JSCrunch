@@ -4,7 +4,7 @@ using JSCrunch.Core.Events;
 
 namespace JSCrunch.VisualStudio.Events
 {
-    public class TestsFoundEvent : Event
+    public class TestsFoundEvent : UpdateMetadataEvent
     {
         public IEnumerable<ProjectItem> Tests { get; }
         public string ProjectName { get; }

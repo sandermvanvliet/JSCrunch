@@ -46,6 +46,7 @@ namespace JSCrunch.VisualStudio
     [Guid(ProcessingQueuePackage.PackageGuidString)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
     [ProvideAutoLoad(UIContextGuids80.SolutionExists)]
+    [ProvideToolWindow(typeof(JSCrunch.VisualStudio.TestsToolWindowPane))]
     public sealed class ProcessingQueuePackage : Package
     {
         private uint solutionEventsCookie;
@@ -89,6 +90,7 @@ namespace JSCrunch.VisualStudio
             
             var eventHandler = dependencyContainer.Resolve<VisualStudioEventHandler>();
             solution.AdviseSolutionEvents(eventHandler, out solutionEventsCookie);
+            JSCrunch.VisualStudio.TestsCommand.Initialize(this);
         }
 
         protected override void Dispose(bool disposing)

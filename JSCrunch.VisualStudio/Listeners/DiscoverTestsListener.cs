@@ -8,6 +8,7 @@ using JSCrunch.Core;
 using JSCrunch.VisualStudio.Events;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
+using NuGet;
 
 namespace JSCrunch.VisualStudio.Listeners
 {
@@ -96,11 +97,18 @@ namespace JSCrunch.VisualStudio.Listeners
                 .OfType<ProjectItem>()
                 .SingleOrDefault(p => p.Name == directories[pointer]);
 
-            if (next != null && next.ProjectItems.Count > 0)
+            if (next != null)
             {
-                return DrillDown(next, directories, pointer + 1);
+                if (pointer == directories.Length - 1)
+                {
+                    return next;
+                }
+                if (next.ProjectItems.Count > 0)
+                {
+                    return DrillDown(next, directories, pointer + 1);
+                }
             }
-
+            
             return null;
         }
     }

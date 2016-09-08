@@ -77,6 +77,11 @@
     <Compile Include="ProcessingQueuePackage.cs" />
     <Compile Include="ProjectConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestsToolWindowPane.cs" />
+    <Compile Include="TestsCommand.cs" />
+    <Compile Include="TestsControl.xaml.cs">
+      <DependentUpon>TestsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VisualStudioEventHandler.cs" />
     <Compile Include="VSExtensions.cs" />
   </ItemGroup>
@@ -94,10 +99,15 @@
     </VSCTCompile>
     <Content Include="Resources\ProcessingQueueCommand.png" />
     <Content Include="Resources\ProcessingQueuePackage.ico" />
+    <Content Include="Resources\TestsCommand.png" />
     <Content Include="stylesheet.css" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="EventLogControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

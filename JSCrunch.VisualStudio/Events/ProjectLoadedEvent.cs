@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 
 namespace JSCrunch.VisualStudio.Events
 {
-    public class ProjectLoadedEvent : Event
+    public class ProjectLoadedEvent : UpdateMetadataEvent
     {
         public IVsProject Project { get; }
 

@@ -21,10 +21,10 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <ListView ItemsSource="{Binding Collection}" Name="ListViewItems">
+        <ListView ItemsSource="{Binding Collection}" Name="ListViewItems" >
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Path=Name}" />
+                    <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Path=EventName}" />
                     <GridViewColumn Header="Timestamp" Width="Auto" DisplayMemberBinding="{Binding Path=Timestamp}" />
                 </GridView>
             </ListView.View>
