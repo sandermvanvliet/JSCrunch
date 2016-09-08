@@ -55,6 +55,7 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Events\DiscoverTestrunnerEvent.cs" />
     <Compile Include="Events\DiscoverTestsEvent.cs" />
+    <Compile Include="Events\MetadataChangedEvent.cs" />
     <Compile Include="Events\ProjectLoadedEvent.cs" />
     <Compile Include="Events\SolutionOpenedEvent.cs" />
     <Compile Include="Events\TestRunnerAvailableEvent.cs" />
@@ -64,8 +65,10 @@
     <Compile Include="IFileSystem.cs" />
     <Compile Include="Listeners\DiscoverTestrunnerListener.cs" />
     <Compile Include="Listeners\DiscoverTestsListener.cs" />
+    <Compile Include="Listeners\MetadataRequestedListener.cs" />
     <Compile Include="Listeners\ProjectLoadedListener.cs" />
     <Compile Include="Listeners\SolutionOpenedListener.cs" />
+    <Compile Include="Listeners\UpdateMedataListener.cs" />
     <Compile Include="Metadata\MetadataModel.cs" />
     <Compile Include="Metadata\ProjectModel.cs" />
     <Compile Include="ProcessingItem.cs" />

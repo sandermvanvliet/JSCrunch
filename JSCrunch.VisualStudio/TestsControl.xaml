@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:visualStudio="clr-namespace:JSCrunch.VisualStudio"
+             xmlns:metadata="clr-namespace:JSCrunch.VisualStudio.Metadata"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              Background="{DynamicResource VsBrush.Window}"
              Foreground="{DynamicResource VsBrush.WindowText}"
              mc:Ignorable="d"
@@ -12,11 +14,14 @@
              Loaded="HandleOnLoaded">
     <Grid>
         <TreeView ItemsSource="{Binding TreeCollection}" Name="TestModelTreeView">
-            <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type visualStudio:Node}" ItemsSource="{Binding Path=Children}">
+            <TreeView.Resources>
+                <HierarchicalDataTemplate DataType="{x:Type metadata:MetadataModel}" ItemsSource="{Binding Path=Projects}">
+                    <TreeViewItem Header="{Binding Path=SolutionName}" />
+                </HierarchicalDataTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type metadata:ProjectModel}" >
                     <TreeViewItem Header="{Binding Path=Name}" />
                 </HierarchicalDataTemplate>
-            </TreeView.ItemTemplate>
+            </TreeView.Resources>
         </TreeView>
     </Grid>
 </UserControl>

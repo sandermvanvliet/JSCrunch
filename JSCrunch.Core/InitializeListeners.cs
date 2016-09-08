@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Practices.Unity;
@@ -21,6 +22,11 @@ namespace JSCrunch.Core
 
             foreach (var subscribable in implementingTypes)
             {
+                if (IsDeferredSubscribable(subscribable))
+                {
+                    continue;
+                }
+
                 container.RegisterType(subscribableType, subscribable, new ContainerControlledLifetimeManager());
 
                 var instance = (ISubscribable)container.Resolve(subscribable);
@@ -29,6 +35,13 @@ namespace JSCrunch.Core
 
                 container.RegisterInstance(instance);
             }
+        }
+
+        private static bool IsDeferredSubscribable(Type subscribable)
+        {
+            var attribute = subscribable.GetCustomAttribute<SubscribableOptionsAttribute>();
+
+            return attribute != null && attribute.LoadDeferred;
         }
     }
 }

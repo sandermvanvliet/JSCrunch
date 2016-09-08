@@ -21,6 +21,8 @@ namespace JSCrunch.VisualStudio
 
             container.RegisterType<IFileSystem, FileSystem>();
 
+            container.RegisterType<MetadataModel, MetadataModel>(new ContainerControlledLifetimeManager());
+
             ((IServiceContainer)visualStudioServiceProvider).AddService(typeof(IUnityContainer), container);
 
             return container;

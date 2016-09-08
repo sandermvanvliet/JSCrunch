@@ -1,14 +1,28 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace JSCrunch.VisualStudio.Metadata
 {
-    public class MetadataModel
+    public class MetadataModel : ICloneable
     {
         public MetadataModel()
         {
-            Projects = new ObservableCollection<ProjectModel>();
+            Projects = new List<ProjectModel>();
         }
 
-        public ObservableCollection<ProjectModel> Projects { get; }
+        public string SolutionName { get; set; }
+
+        public List<ProjectModel> Projects { get; set; }
+
+        public object Clone()
+        {
+            var clone = new MetadataModel();
+
+            clone.SolutionName = SolutionName;
+            clone.Projects = Projects.Select(p => p.Clone()).ToList();
+
+            return clone;
+        }
     }
 }
