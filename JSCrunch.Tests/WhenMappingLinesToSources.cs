@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using FluentAssertions;
+using JSCrunch.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace JSCrunch.Tests

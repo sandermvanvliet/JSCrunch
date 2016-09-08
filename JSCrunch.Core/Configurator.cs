@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Configuration;
 
-namespace JSCrunch
+namespace JSCrunch.Core
 {
     public class Configurator
     {

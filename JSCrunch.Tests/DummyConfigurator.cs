@@ -1,4 +1,6 @@
-﻿namespace JSCrunch.Tests
+﻿using JSCrunch.Core;
+
+namespace JSCrunch.Tests
 {
     public class DummyConfigurator : Configurator
     {

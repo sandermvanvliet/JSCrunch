@@ -1,4 +1,5 @@
 ﻿using System;
+using JSCrunch.Core;
 
 namespace JSCrunch
 {

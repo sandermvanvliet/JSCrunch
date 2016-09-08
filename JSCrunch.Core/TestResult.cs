@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using JSCrunch.Core;
 
-namespace JSCrunch
+namespace JSCrunch.Core
 {
     public class TestResult
     {

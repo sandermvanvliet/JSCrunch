@@ -4,6 +4,7 @@ using System.Linq;
 using FluentAssertions;
 using JSCrunch.Core;
 using JSCrunch.Core.Events;
+using JSCrunch.Core.Listeners;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace JSCrunch.Tests

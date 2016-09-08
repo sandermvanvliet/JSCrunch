@@ -64,8 +64,18 @@
       <HintPath>..\packages\Microsoft.VisualStudio.TextManager.Interop.7.10.6070\lib\Microsoft.VisualStudio.TextManager.Interop.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SourceMapDotNet, Version=1.0.5478.26629, Culture=neutral, PublicKeyToken=d357635542166cea, processorArchitecture=MSIL">
+      <HintPath>..\packages\SourceMapDotNet.1.0.5478.26629\lib\SourceMapDotNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -75,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDateTime.cs" />
+    <Compile Include="Configurator.cs" />
     <Compile Include="EventQueue.cs" />
     <Compile Include="Events\Event.cs" />
     <Compile Include="Events\FileChangedEvent.cs" />
@@ -84,11 +95,17 @@
     <Compile Include="Events\TestRunStartedEvent.cs" />
     <Compile Include="InitializeListeners.cs" />
     <Compile Include="ISubscribable.cs" />
+    <Compile Include="Listeners\FileChangedEventListener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SourceLocation.cs" />
+    <Compile Include="SourceMapMapper.cs" />
     <Compile Include="SubscribableOptionsAttribute.cs" />
     <Compile Include="TestCaseResult.cs" />
+    <Compile Include="TestResult.cs" />
+    <Compile Include="TestResultBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Key.snk" />
     <None Include="packages.config" />
   </ItemGroup>

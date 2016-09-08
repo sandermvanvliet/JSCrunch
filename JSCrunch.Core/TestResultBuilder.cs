@@ -1,11 +1,9 @@
-﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
-using JSCrunch.Core;
 
-namespace JSCrunch
+namespace JSCrunch.Core
 {
     public static class TestResultBuilder
     {

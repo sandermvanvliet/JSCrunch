@@ -1,9 +1,8 @@
-﻿using System;
+using System;
 using System.Diagnostics;
-using JSCrunch.Core;
 using JSCrunch.Core.Events;
 
-namespace JSCrunch
+namespace JSCrunch.Core.Listeners
 {
     public class FileChangedEventListener : ISubscribable<FileChangedEvent>
     {

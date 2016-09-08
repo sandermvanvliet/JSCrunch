@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using JSCrunch.Core;
 
 namespace JSCrunch.Tests
 {

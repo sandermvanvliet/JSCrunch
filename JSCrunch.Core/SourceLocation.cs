@@ -1,6 +1,6 @@
 using SourceMapDotNet.Model;
 
-namespace JSCrunch
+namespace JSCrunch.Core
 {
     public class SourceLocation
     {

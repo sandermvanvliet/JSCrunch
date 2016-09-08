@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 using SourceMapDotNet;
 using SourceMapDotNet.Model;
 
-namespace JSCrunch
+namespace JSCrunch.Core
 {
     public class SourceMapMapper
     {
