@@ -58,12 +58,12 @@ namespace JSCrunch.VisualStudio.Listeners
                 {
                     foreach (var test in testsFoundEvent.Tests)
                     {
-                        var exists = project.Tests.Any(c => c == test.Name);
+                        var exists = project.Tests.Any(c => c.Name == test.Name);
                         if (!exists)
                         {
                             project
                                 .Tests
-                                .Add(test.Name);
+                                .Add(new TestModel { Name = test.Name});
                         }
                     }
                 }

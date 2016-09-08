@@ -71,6 +71,7 @@
     <Compile Include="Listeners\UpdateMedataListener.cs" />
     <Compile Include="Metadata\MetadataModel.cs" />
     <Compile Include="Metadata\ProjectModel.cs" />
+    <Compile Include="Metadata\TestModel.cs" />
     <Compile Include="ProcessingItem.cs" />
     <Compile Include="EventLogToolWindow.cs" />
     <Compile Include="ProcessingQueueCommand.cs" />

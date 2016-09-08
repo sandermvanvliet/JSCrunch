@@ -8,10 +8,10 @@ namespace JSCrunch.VisualStudio.Metadata
     {
         public ProjectModel()
         {
-            Tests = new List<string>();
+            Tests = new List<TestModel>();
         }
 
-        public List<string> Tests { get; set; }
+        public List<TestModel> Tests { get; set; }
 
         public string Name { get; set; }
 
@@ -20,7 +20,7 @@ namespace JSCrunch.VisualStudio.Metadata
             return new ProjectModel
             {
                 Name = Name,
-                Tests = Tests.Select(t => (string)t.Clone()).ToList()
+                Tests = Tests.Select(t => t.Clone()).ToList()
             };
         }
     }

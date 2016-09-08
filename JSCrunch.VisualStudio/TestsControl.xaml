@@ -18,7 +18,10 @@
                 <HierarchicalDataTemplate DataType="{x:Type metadata:MetadataModel}" ItemsSource="{Binding Path=Projects}">
                     <TreeViewItem Header="{Binding Path=SolutionName}" />
                 </HierarchicalDataTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type metadata:ProjectModel}" >
+                <HierarchicalDataTemplate DataType="{x:Type metadata:ProjectModel}" ItemsSource="{Binding Path=Tests}">
+                    <TreeViewItem Header="{Binding Path=Name}" />
+                </HierarchicalDataTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type metadata:TestModel}">
                     <TreeViewItem Header="{Binding Path=Name}" />
                 </HierarchicalDataTemplate>
             </TreeView.Resources>
