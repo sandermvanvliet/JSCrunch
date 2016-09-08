@@ -5,13 +5,13 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using JSCrunch.Core;
 using JSCrunch.VisualStudio.Events;
-using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
 
 namespace JSCrunch.VisualStudio
@@ -22,6 +22,8 @@ namespace JSCrunch.VisualStudio
     public partial class TestsControl : UserControl, ISubscribable<UpdateMetadataEvent>
     {
         private EventQueue _eventQueue;
+        private bool _bufferEvents = true;
+        private readonly Queue<UpdateMetadataEvent> _eventBuffer;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="TestsControl" /> class.
@@ -31,6 +33,7 @@ namespace JSCrunch.VisualStudio
             InitializeComponent();
             TreeCollection = new ObservableCollection<Node>();
             DataContext = this;
+            _eventBuffer = new Queue<UpdateMetadataEvent>();
         }
 
         public EventQueue EventQueue
@@ -52,15 +55,22 @@ namespace JSCrunch.VisualStudio
 
         public void Publish(UpdateMetadataEvent eventInstance)
         {
+            if (_bufferEvents)
+            {
+                _eventBuffer.Enqueue(eventInstance);
+                return;
+            }
+
             if (eventInstance is SolutionOpenedEvent)
             {
                 var solutionOpenedEvent = (SolutionOpenedEvent) eventInstance;
                 object pvar;
-                solutionOpenedEvent.Solution.GetProperty((int)__VSPROPID.VSPROPID_SolutionBaseName, out pvar);
-                string solutionName = (string) pvar;
+                solutionOpenedEvent.Solution.GetProperty((int) __VSPROPID.VSPROPID_SolutionBaseName, out pvar);
+                var solutionName = (string) pvar;
 
-                if(TreeCollection.All(n => n.Name != solutionName))
+                if (TreeCollection.All(n => n.Name != solutionName))
                 {
+                    TreeCollection.Clear();
                     TreeCollection.Add(new Node
                     {
                         Name = solutionName
@@ -88,13 +98,13 @@ namespace JSCrunch.VisualStudio
                 }
             }
 
-            if(eventInstance is TestsFoundEvent)
+            if (eventInstance is TestsFoundEvent)
             {
-                var testsFoundEvent = (TestsFoundEvent)eventInstance;
+                var testsFoundEvent = (TestsFoundEvent) eventInstance;
                 var solution = TreeCollection.FirstOrDefault();
                 if (solution == null)
                 {
-                    solution = new Node { Name = "Solution!" };
+                    solution = new Node {Name = "Solution!"};
                     TreeCollection.Add(solution);
                 }
 
@@ -108,16 +118,21 @@ namespace JSCrunch.VisualStudio
                         {
                             project
                                 .Children
-                                .Add(new Node { Name = test.Name });
+                                .Add(new Node {Name = test.Name});
                         }
                     }
                 }
             }
         }
 
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        private void HandleOnLoaded(object sender, RoutedEventArgs e)
         {
-            TreeCollection.Add(new VisualStudio.Node {Name = "Added node " + TreeCollection.Count});
+            // Replay buffered events
+            _bufferEvents = false;
+            while (_eventBuffer.Any())
+            {
+                Publish(_eventBuffer.Dequeue());
+            }
         }
     }
 
