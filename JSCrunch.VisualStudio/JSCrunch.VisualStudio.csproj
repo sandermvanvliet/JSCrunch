@@ -68,6 +68,7 @@
     <Compile Include="Listeners\MetadataRequestedListener.cs" />
     <Compile Include="Listeners\ProjectLoadedListener.cs" />
     <Compile Include="Listeners\SolutionOpenedListener.cs" />
+    <Compile Include="Listeners\TestRunnerAvailableListener.cs" />
     <Compile Include="Listeners\UpdateMedataListener.cs" />
     <Compile Include="Metadata\MetadataModel.cs" />
     <Compile Include="Metadata\ProjectModel.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="ProcessingQueuePackage.cs" />
     <Compile Include="ProjectConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SolutionConfigurator.cs" />
     <Compile Include="TestsToolWindowPane.cs" />
     <Compile Include="TestsCommand.cs" />
     <Compile Include="TestsControl.xaml.cs">

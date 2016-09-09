@@ -8,7 +8,7 @@ namespace JSCrunch.Core
         string TestPattern { get; }
         string PathToWatch { get; }
         string TestRunnerParameters { get; }
-        string TestRunnerExecutable { get; }
+        string TestRunnerExecutable { get; set; }
         bool IncludeSubdirectories { get; }
     }
 
@@ -39,7 +39,7 @@ namespace JSCrunch.Core
 
         public string PathToWatch { get; private set; }
         public string TestRunnerParameters { get; private set; }
-        public string TestRunnerExecutable { get; private set; }
+        public string TestRunnerExecutable { get; set; }
         public bool IncludeSubdirectories { get; private set; }
 
         public event EventHandler<EventArgs> UpdatedSettingsAvailable;
