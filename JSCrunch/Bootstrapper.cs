@@ -11,6 +11,7 @@ namespace JSCrunch
 
             container.RegisterType<IOutput, ConsoleOutput>();
             container.RegisterInstance(new EventQueue());
+            container.RegisterType<IConfigurator, AppConfigConfigurator>();
 
             return container;
         }
