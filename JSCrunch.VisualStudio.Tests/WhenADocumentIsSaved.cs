@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using JSCrunch.Core;
+using JSCrunch.Core.Events;
+using JSCrunch.VisualStudio.Tests.Doubles;
+using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 
@@ -11,14 +14,18 @@ namespace JSCrunch.VisualStudio.Tests
     [TestClass]
     public class WhenADocumentIsSaved
     {
-        private List<ProcessingItem> _processingQueue;
         private VisualStudioEventHandler _eventHandler;
-         
+        private IVsRunningDocumentTableDouble _runningDocumentsTable;
+        private EventQueue _eventQueue;
+
         [TestInitialize]
         public void Initialize()
         {
-            _processingQueue = new List<ProcessingItem>();
-            _eventHandler = new VisualStudioEventHandler(new EventQueue(), Substitute.For<IServiceProvider>());
+            var visualStudioServiceProvider = Substitute.For<IServiceProvider>();
+            _runningDocumentsTable = new IVsRunningDocumentTableDouble();
+            visualStudioServiceProvider.GetService(typeof(SVsRunningDocumentTable)).Returns(_runningDocumentsTable);
+            _eventQueue = new EventQueue();
+            _eventHandler = new VisualStudioEventHandler(_eventQueue, visualStudioServiceProvider);
         }
 
         [TestMethod]
@@ -28,10 +35,10 @@ namespace JSCrunch.VisualStudio.Tests
 
             WhenTheFileIsSaved(file);
 
-            _processingQueue
-                .Count
+            _eventQueue
+                .OfType<FileChangedEvent>()
                 .Should()
-                .Be(1);
+                .HaveCount(1);
         }
 
         [TestMethod]
@@ -41,9 +48,10 @@ namespace JSCrunch.VisualStudio.Tests
 
             WhenTheFileIsSaved(filePath);
 
-            _processingQueue
+            _eventQueue
+                .OfType<FileChangedEvent>()
                 .Single()
-                .FileName
+                .Path
                 .Should()
                 .Be(filePath);
         }
@@ -57,7 +65,8 @@ namespace JSCrunch.VisualStudio.Tests
 
             WhenTheFileIsSaved(filePath);
 
-            _processingQueue
+            _eventQueue
+                .OfType<FileChangedEvent>()
                 .Single()
                 .Timestamp
                 .Should()
@@ -72,14 +81,15 @@ namespace JSCrunch.VisualStudio.Tests
             WhenTheFileIsSaved(filePath);
             WhenTheFileIsSaved(filePath);
 
-            _processingQueue
-                .Count
+            _eventQueue
+                .OfType<FileChangedEvent>()
                 .Should()
-                .Be(2);
+                .HaveCount(2);
         }
 
         private void WhenTheFileIsSaved(string file)
         {
+            _runningDocumentsTable.GivenTheFile(file);
             _eventHandler.OnAfterSave(DocCookieOf(file));
         }
 
