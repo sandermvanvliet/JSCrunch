@@ -8,10 +8,11 @@ using Microsoft.VisualStudio.Shell.Interop;
 
 namespace JSCrunch.VisualStudio
 {
-    public class VisualStudioEventHandler : IVsSolutionEvents, IVsSolutionLoadEvents
+    public class VisualStudioEventHandler : IVsSolutionEvents, IVsSolutionLoadEvents, IVsRunningDocTableEvents
     {
         private readonly EventQueue _eventQueue;
         private readonly IServiceProvider _visualStudioServiceProvider;
+        private IVsRunningDocumentTable _runningDocumentsTable;
 
         public VisualStudioEventHandler(EventQueue eventQueue, IServiceProvider visualStudioServiceProvider)
         {
@@ -114,6 +115,55 @@ namespace JSCrunch.VisualStudio
         }
 
         public int OnAfterBackgroundSolutionLoadComplete()
+        {
+            return VSConstants.S_OK;
+        }
+
+        public int OnAfterFirstDocumentLock(uint docCookie, uint dwRDTLockType, uint dwReadLocksRemaining, uint dwEditLocksRemaining)
+        {
+            return VSConstants.S_OK;
+        }
+
+        public int OnBeforeLastDocumentUnlock(uint docCookie, uint dwRDTLockType, uint dwReadLocksRemaining, uint dwEditLocksRemaining)
+        {
+            return VSConstants.S_OK;
+        }
+
+        public int OnAfterSave(uint docCookie)
+        {
+            if (_runningDocumentsTable == null)
+            {
+                _runningDocumentsTable = _visualStudioServiceProvider.GetService(typeof(SVsRunningDocumentTable)) as IVsRunningDocumentTable;
+            }
+
+            uint rdtFlags;
+            uint readLocks;
+            uint editLocks;
+            string mkDocument;
+            IVsHierarchy hierarchy;
+            uint itemId;
+            IntPtr ppunkDocData;
+
+            if (_runningDocumentsTable.GetDocumentInfo(docCookie, out rdtFlags, out readLocks, out editLocks,
+                out mkDocument, out hierarchy, out itemId, out ppunkDocData) == VSConstants.S_OK)
+            {
+                _eventQueue.Enqueue(new FileChangedEvent(mkDocument));
+            }
+
+            return VSConstants.S_OK;
+        }
+
+        public int OnAfterAttributeChange(uint docCookie, uint grfAttribs)
+        {
+            return VSConstants.S_OK;
+        }
+
+        public int OnBeforeDocumentWindowShow(uint docCookie, int fFirstShow, IVsWindowFrame pFrame)
+        {
+            return VSConstants.S_OK;
+        }
+
+        public int OnAfterDocumentWindowHide(uint docCookie, IVsWindowFrame pFrame)
         {
             return VSConstants.S_OK;
         }

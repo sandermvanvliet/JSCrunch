@@ -50,6 +50,7 @@ namespace JSCrunch.VisualStudio
     public sealed class ProcessingQueuePackage : Package
     {
         private uint solutionEventsCookie;
+        private uint rdtEventsCookie;
 
         /// <summary>
         /// ProcessingQueuePackage GUID string.
@@ -83,6 +84,7 @@ namespace JSCrunch.VisualStudio
             InitializeListeners.FromAssembly(dependencyContainer, this.GetType().Assembly);
             
             ProcessingQueueCommand.Initialize(this);
+            TestsCommand.Initialize(this);
             base.Initialize();
 
             // Subscribe to solution loaded/unloaded events
@@ -90,7 +92,9 @@ namespace JSCrunch.VisualStudio
             
             var eventHandler = dependencyContainer.Resolve<VisualStudioEventHandler>();
             solution.AdviseSolutionEvents(eventHandler, out solutionEventsCookie);
-            JSCrunch.VisualStudio.TestsCommand.Initialize(this);
+
+            var rdt = GetService(typeof(SVsRunningDocumentTable)) as IVsRunningDocumentTable;
+            rdt.AdviseRunningDocTableEvents(eventHandler, out rdtEventsCookie);
         }
 
         protected override void Dispose(bool disposing)

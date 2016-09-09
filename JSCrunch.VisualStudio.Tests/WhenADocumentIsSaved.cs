@@ -80,6 +80,12 @@ namespace JSCrunch.VisualStudio.Tests
 
         private void WhenTheFileIsSaved(string file)
         {
+            _eventHandler.OnAfterSave(DocCookieOf(file));
+        }
+
+        private uint DocCookieOf(string file)
+        {
+            return 1;
         }
 
         private static string GivenAFile()
