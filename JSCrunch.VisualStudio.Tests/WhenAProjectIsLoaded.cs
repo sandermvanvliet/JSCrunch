@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using JSCrunch.Core;
@@ -17,7 +16,7 @@ namespace JSCrunch.VisualStudio.Tests
         public void ThenADiscoverTestsEventIsQueued()
         {
             var eventQueue = new EventQueue();
-            var eventHandler = new VisualStudioEventHandler(new List<ProcessingItem>(), eventQueue, Substitute.For<IServiceProvider>());
+            var eventHandler = new VisualStudioEventHandler(eventQueue, Substitute.For<IServiceProvider>());
 
             eventHandler.OnAfterLoadProject(null, null);
 

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using JSCrunch.Core;
 using JSCrunch.Core.Events;
@@ -11,24 +10,13 @@ namespace JSCrunch.VisualStudio
 {
     public class VisualStudioEventHandler : IVsSolutionEvents, IVsSolutionLoadEvents
     {
-        private readonly List<ProcessingItem> _processingQueue;
         private readonly EventQueue _eventQueue;
         private readonly IServiceProvider _visualStudioServiceProvider;
 
-        public VisualStudioEventHandler(List<ProcessingItem> processingQueue, EventQueue eventQueue, IServiceProvider visualStudioServiceProvider)
+        public VisualStudioEventHandler(EventQueue eventQueue, IServiceProvider visualStudioServiceProvider)
         {
-            _processingQueue = processingQueue;
             _eventQueue = eventQueue;
             _visualStudioServiceProvider = visualStudioServiceProvider;
-        }
-
-        public void HandleDocumentSave(string file)
-        {
-            _processingQueue.Add(new ProcessingItem
-            {
-                FileName = file,
-                Timestamp = ApplicationDateTime.UtcNow()
-            });
         }
 
         public int OnAfterOpenProject(IVsHierarchy pHierarchy, int fAdded)

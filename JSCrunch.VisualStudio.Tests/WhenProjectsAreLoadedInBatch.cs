@@ -21,7 +21,7 @@ namespace JSCrunch.VisualStudio.Tests
             var solutionDouble = new VsSolutionDouble();
             var serviceProvider = Substitute.For<IServiceProvider>();
             serviceProvider.GetService(typeof(SVsSolution)).Returns(solutionDouble);
-            var eventHandler = new VisualStudioEventHandler(null, eventQueue, serviceProvider);
+            var eventHandler = new VisualStudioEventHandler(eventQueue, serviceProvider);
 
             // Pretend we have one project loaded
             solutionDouble.WithProjects(new [] { new VsProjectDouble() });

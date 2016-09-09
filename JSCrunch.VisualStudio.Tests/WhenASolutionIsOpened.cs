@@ -18,7 +18,7 @@ namespace JSCrunch.VisualStudio.Tests
         {
             var processingQueue = new List<ProcessingItem>();
             var eventQueue = new EventQueue();
-            var handler = new VisualStudioEventHandler(processingQueue, eventQueue, Substitute.For<IServiceProvider>());
+            var handler = new VisualStudioEventHandler(eventQueue, Substitute.For<IServiceProvider>());
 
             handler.OnAfterOpenSolution(null, 0);
 

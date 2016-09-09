@@ -16,7 +16,7 @@ namespace JSCrunch.VisualStudio.Tests
         public void Initialize()
         {
             _processingQueue = new List<ProcessingItem>();
-            _eventHandler = new VisualStudioEventHandler(_processingQueue, new EventQueue(), Substitute.For<IServiceProvider>());
+            _eventHandler = new VisualStudioEventHandler(new EventQueue(), Substitute.For<IServiceProvider>());
         }
 
         [TestMethod]
@@ -26,7 +26,6 @@ namespace JSCrunch.VisualStudio.Tests
 
         private void WhenTheFileIsSaved(string file)
         {
-            _eventHandler.HandleDocumentSave(file);
         }
 
         private static string GivenAFile()
