@@ -1,10 +1,14 @@
 ﻿using System.Collections.Generic;
-using JSCrunch.Core;
 
 namespace JSCrunch.VisualStudio.Metadata
 {
     public class TestModel
     {
+        public string Name { get; set; }
+        public int NumberOfFailures { get; set; }
+        public int PassedTests { get; set; }
+        public List<ResultModel> Tests { get; set; }
+
         public TestModel Clone()
         {
             return new TestModel
@@ -12,13 +16,8 @@ namespace JSCrunch.VisualStudio.Metadata
                 Name = Name,
                 NumberOfFailures = NumberOfFailures,
                 PassedTests = PassedTests,
-                FailedTests = FailedTests
+                Tests = Tests
             };
         }
-
-        public string Name { get; set; }
-        public int NumberOfFailures { get; set; }
-        public int PassedTests { get; set; }
-        public List<TestCaseResult> FailedTests { get; set; }
     }
 }

@@ -72,10 +72,10 @@ namespace JSCrunch.Core.Listeners
         {
             _eventQueue.Enqueue(new TestResultsAvailableEvent
             {
-                FailedTests = testResult.FailedTests,
                 NumberOfFailures = testResult.NumberOfFailures,
                 NumberOfTests = testResult.NumberOfTests,
-                TestSuite = testResult.TestSuite
+                TestSuite = testResult.TestSuite,
+                Tests = testResult.Tests
             });
         }
     }

@@ -71,6 +71,7 @@
     <Compile Include="Listeners\UpdateMedataListener.cs" />
     <Compile Include="Metadata\MetadataModel.cs" />
     <Compile Include="Metadata\ProjectModel.cs" />
+    <Compile Include="Metadata\ResultModel.cs" />
     <Compile Include="Metadata\TestModel.cs" />
     <Compile Include="ProcessingItem.cs" />
     <Compile Include="EventLogToolWindow.cs" />
@@ -103,8 +104,10 @@
     <VSCTCompile Include="ProcessingQueuePackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
+    <Resource Include="Resources\failure.png" />
     <Content Include="Resources\ProcessingQueueCommand.png" />
     <Content Include="Resources\ProcessingQueuePackage.ico" />
+    <Resource Include="Resources\success.png" />
     <Content Include="Resources\TestsCommand.png" />
     <Content Include="stylesheet.css" />
   </ItemGroup>

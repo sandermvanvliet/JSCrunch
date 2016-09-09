@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using JSCrunch.Core.Events;
 
@@ -27,7 +28,15 @@ namespace JSCrunch.Core
 
             foreach (var listener in listenersForEvent)
             {
-                listener.Publish(eventInstance);
+                try
+                {
+                    listener.Publish(eventInstance);
+                }
+                catch (Exception ex)
+                {
+                    Debugger.Break();
+                    Debug.WriteLine(ex.ToString());
+                }
             }
         }
 

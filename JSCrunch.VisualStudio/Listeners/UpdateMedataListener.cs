@@ -91,8 +91,7 @@ namespace JSCrunch.VisualStudio.Listeners
                     {
                         // Update status
                         testModel.NumberOfFailures = testResults.NumberOfFailures;
-                        testModel.FailedTests = testResults.FailedTests;
-                        testModel.PassedTests = testResults.NumberPassed;
+                        testModel.Tests = testResults.Tests.Select(t => new ResultModel { Name = t.Name, Success = t.Success}).ToList();
 
                         dirty = true;
                     }

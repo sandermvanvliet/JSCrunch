@@ -4,5 +4,6 @@ namespace JSCrunch.Core
     {
         public string Name { get; set; }
         public string Output { get; set; }
+        public bool Success { get; set; }
     }
 }

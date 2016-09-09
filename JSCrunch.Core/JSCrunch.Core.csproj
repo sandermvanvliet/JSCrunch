@@ -68,6 +68,7 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="SourceMapDotNet, Version=1.0.5478.26629, Culture=neutral, PublicKeyToken=d357635542166cea, processorArchitecture=MSIL">
       <HintPath>..\packages\SourceMapDotNet.1.0.5478.26629\lib\SourceMapDotNet.dll</HintPath>
       <Private>True</Private>
@@ -75,6 +76,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />

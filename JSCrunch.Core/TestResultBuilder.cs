@@ -35,22 +35,38 @@ namespace JSCrunch.Core
                 var fileName = Path.GetFileNameWithoutExtension(node.Attributes["name"].Value);
                 var numberOfTests = int.Parse(node.Attributes["tests"].Value);
                 var numberOfFailures = int.Parse(node.Attributes["failures"].Value);
-                var testcasesThatFailed =
-                    node.SelectNodes("testcase[failure]")
-                        .OfType<XmlNode>()
-                        .Select(n => new TestCaseResult { Name = n.Attributes["name"].Value, Output = MapOutput(n) })
-                        .ToList();
+
+                var testCases = node.SelectNodes("testcase")
+                    .OfType<XmlNode>()
+                    .Select(AsTestCaseResult)
+                    .ToList();
 
                 testResults.Add(new TestResult
                 {
                     TestSuite = fileName,
                     NumberOfTests = numberOfTests,
                     NumberOfFailures = numberOfFailures,
-                    FailedTests = testcasesThatFailed
+                    Tests = testCases
                 });
             }
 
             return testResults;
+        }
+
+        private static TestCaseResult AsTestCaseResult(XmlNode node)
+        {
+            var result = new TestCaseResult { Name = node.Attributes["name"].Value, Success = true };
+
+            var failure = node.SelectSingleNode("failure");
+            
+            if (failure != null)
+            {
+                result.Success = false;
+
+                result.Output = MapOutput(node);
+            }
+
+            return result;
         }
 
         private static string MapOutput(XmlNode n)

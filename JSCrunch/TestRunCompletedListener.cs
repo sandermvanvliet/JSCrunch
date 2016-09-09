@@ -19,7 +19,7 @@ namespace JSCrunch
         {
             _output.Write(new TestResult
             {
-                FailedTests = testRunCompletedEvent.FailedTests,
+                Tests = testRunCompletedEvent.Tests,
                 NumberOfFailures = testRunCompletedEvent.NumberOfFailures,
                 NumberOfTests = testRunCompletedEvent.NumberOfTests,
                 TestSuite = testRunCompletedEvent.TestSuite
