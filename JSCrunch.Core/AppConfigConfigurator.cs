@@ -3,9 +3,18 @@ using System.Configuration;
 
 namespace JSCrunch.Core
 {
-    public class Configurator
+    public interface IConfigurator
     {
-        public Configurator()
+        string TestPattern { get; }
+        string PathToWatch { get; }
+        string TestRunnerParameters { get; }
+        string TestRunnerExecutable { get; }
+        bool IncludeSubdirectories { get; }
+    }
+
+    public class AppConfigConfigurator : IConfigurator
+    {
+        public AppConfigConfigurator()
         {
             Refresh();
         }

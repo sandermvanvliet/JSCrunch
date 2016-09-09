@@ -9,11 +9,11 @@ namespace JSCrunch
     // WatcherService is only ever instantiated through Unity
     public class WatcherService
     {
-        private readonly Configurator _configurator;
+        private readonly AppConfigConfigurator _configurator;
         private readonly EventQueue _eventQueue;
         private FileSystemWatcher _fileSystemWatcher;
 
-        public WatcherService(Configurator configurator, EventQueue eventQueue)
+        public WatcherService(AppConfigConfigurator configurator, EventQueue eventQueue)
         {
             _configurator = configurator;
             _eventQueue = eventQueue;
@@ -27,7 +27,7 @@ namespace JSCrunch
             InitializeFileWatcher(_configurator);
         }
 
-        private void InitializeFileWatcher(Configurator configurator)
+        private void InitializeFileWatcher(AppConfigConfigurator configurator)
         {
             if (_fileSystemWatcher != null)
             {

@@ -2,7 +2,7 @@
 
 namespace JSCrunch.Tests
 {
-    public class DummyConfigurator : Configurator
+    public class DummyConfigurator : AppConfigConfigurator
     {
         protected override string GetAppSetting(string name)
         {

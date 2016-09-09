@@ -7,9 +7,9 @@ namespace JSCrunch.Core.Listeners
     public class FileChangedEventListener : ISubscribable<FileChangedEvent>
     {
         private readonly EventQueue _eventQueue;
-        private readonly Configurator _configurator;
+        private readonly IConfigurator _configurator;
 
-        public FileChangedEventListener(EventQueue eventQueue, Configurator configurator)
+        public FileChangedEventListener(EventQueue eventQueue, IConfigurator configurator)
         {
             _eventQueue = eventQueue;
             _configurator = configurator;
