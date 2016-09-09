@@ -16,6 +16,9 @@
     <Grid>
         <TreeView ItemsSource="{Binding TreeCollection}" Name="TestModelTreeView">
             <TreeView.Resources>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Setter Property="IsExpanded" Value="True" />
+                </Style>
                 <HierarchicalDataTemplate DataType="{x:Type metadata:MetadataModel}" ItemsSource="{Binding Projects}">
                     <TreeViewItem Header="{Binding Path=SolutionName}" />
                 </HierarchicalDataTemplate>
