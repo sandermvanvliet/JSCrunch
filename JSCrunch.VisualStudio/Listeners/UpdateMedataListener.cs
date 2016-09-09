@@ -23,6 +23,8 @@ namespace JSCrunch.VisualStudio.Listeners
 
         public void Publish(UpdateMetadataEvent eventInstance)
         {
+            var dirty = false;
+
             if (eventInstance is SolutionOpenedEvent)
             {
                 var solutionOpenedEvent = (SolutionOpenedEvent)eventInstance;
@@ -34,19 +36,23 @@ namespace JSCrunch.VisualStudio.Listeners
                 {
                     _model.SolutionName = solutionName;
                     _model.Projects.Clear();
+
+                    dirty = true;
                 }
             }
 
             if (eventInstance is ProjectLoadedEvent)
             {
                 var projectLoadedEvent = (ProjectLoadedEvent)eventInstance;
-                
+
                 var projectExists = _model.Projects.Any(c => c.Name == projectLoadedEvent.Project.GetProjectName());
                 if (!projectExists)
                 {
                     _model
                         .Projects
                         .Add(new ProjectModel { Name = projectLoadedEvent.Project.GetProjectName() });
+
+                    dirty = true;
                 }
             }
 
@@ -64,13 +70,39 @@ namespace JSCrunch.VisualStudio.Listeners
                         {
                             project
                                 .Tests
-                                .Add(new TestModel { Name = test.Name});
+                                .Add(new TestModel { Name = test.Name });
+
+                            dirty = true;
                         }
                     }
                 }
             }
 
-            _eventQueue.Enqueue(new MetadataChangedEvent((MetadataModel)_model.Clone()));
+            if (eventInstance is TestResultsAvailableEvent)
+            {
+                var testResults = eventInstance as TestResultsAvailableEvent;
+
+                // Try to find the test file in the model
+                foreach (var project in _model.Projects)
+                {
+                    var testModel = project.Tests.SingleOrDefault(t => t.Name == testResults.TestSuite);
+
+                    if (testModel != null)
+                    {
+                        // Update status
+                        testModel.NumberOfFailures = testResults.NumberOfFailures;
+                        testModel.FailedTests = testResults.FailedTests;
+                        testModel.PassedTests = testResults.NumberPassed;
+
+                        dirty = true;
+                    }
+                }
+            }
+
+            if (dirty)
+            {
+                _eventQueue.Enqueue(new MetadataChangedEvent((MetadataModel)_model.Clone()));
+            }
         }
     }
 }
