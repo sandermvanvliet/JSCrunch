@@ -1,6 +1,4 @@
-using JSCrunch.Core.Events;
-
-namespace JSCrunch.VisualStudio.Events
+namespace JSCrunch.Core.Events
 {
     public abstract class UpdateMetadataEvent : Event
     {

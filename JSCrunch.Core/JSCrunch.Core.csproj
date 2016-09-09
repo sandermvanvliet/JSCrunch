@@ -93,6 +93,7 @@
     <Compile Include="Events\TestResultsAvailableEvent.cs" />
     <Compile Include="Events\TestRunCompletedEvent.cs" />
     <Compile Include="Events\TestRunStartedEvent.cs" />
+    <Compile Include="Events\UpdateMetadataEvent.cs" />
     <Compile Include="InitializeListeners.cs" />
     <Compile Include="ISubscribable.cs" />
     <Compile Include="Listeners\FileChangedEventListener.cs" />

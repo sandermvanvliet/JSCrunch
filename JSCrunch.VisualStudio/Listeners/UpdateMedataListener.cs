@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using JSCrunch.Core;
+using JSCrunch.Core.Events;
 using JSCrunch.VisualStudio.Events;
 using JSCrunch.VisualStudio.Metadata;
 using Microsoft.VisualStudio.Shell.Interop;
