@@ -6,6 +6,7 @@
              xmlns:visualStudio="clr-namespace:JSCrunch.VisualStudio"
              xmlns:metadata="clr-namespace:JSCrunch.VisualStudio.Metadata"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:core="clr-namespace:JSCrunch.Core;assembly=JSCrunch.Core"
              Background="{DynamicResource VsBrush.Window}"
              Foreground="{DynamicResource VsBrush.WindowText}"
              mc:Ignorable="d"
@@ -15,14 +16,17 @@
     <Grid>
         <TreeView ItemsSource="{Binding TreeCollection}" Name="TestModelTreeView">
             <TreeView.Resources>
-                <HierarchicalDataTemplate DataType="{x:Type metadata:MetadataModel}" ItemsSource="{Binding Path=Projects}">
+                <HierarchicalDataTemplate DataType="{x:Type metadata:MetadataModel}" ItemsSource="{Binding Projects}">
                     <TreeViewItem Header="{Binding Path=SolutionName}" />
                 </HierarchicalDataTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type metadata:ProjectModel}" ItemsSource="{Binding Path=Tests}">
+                <HierarchicalDataTemplate DataType="{x:Type metadata:ProjectModel}" ItemsSource="{Binding Tests}">
                     <TreeViewItem Header="{Binding Path=Name}" />
                 </HierarchicalDataTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type metadata:TestModel}">
+                <HierarchicalDataTemplate DataType="{x:Type metadata:TestModel}" ItemsSource="{Binding FailedTests}">
                     <TreeViewItem Header="{Binding Path=Name}" />
+                </HierarchicalDataTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type core:TestCaseResult}">
+                    <TreeViewItem Header="{Binding Path=Name}"></TreeViewItem>
                 </HierarchicalDataTemplate>
             </TreeView.Resources>
         </TreeView>

@@ -85,7 +85,7 @@ namespace JSCrunch.VisualStudio.Listeners
                 // Try to find the test file in the model
                 foreach (var project in _model.Projects)
                 {
-                    var testModel = project.Tests.SingleOrDefault(t => t.Name == testResults.TestSuite);
+                    var testModel = project.Tests.SingleOrDefault(t => t.Name == testResults.TestSuite + ".ts");
 
                     if (testModel != null)
                     {
