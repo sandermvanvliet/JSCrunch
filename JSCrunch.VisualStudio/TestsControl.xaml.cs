@@ -9,7 +9,6 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using JSCrunch.Core;
-using JSCrunch.Core.Events;
 using JSCrunch.VisualStudio.Events;
 using JSCrunch.VisualStudio.Metadata;
 
@@ -65,9 +64,5 @@ namespace JSCrunch.VisualStudio
         {
             _eventQueue.Enqueue(new MetadataRequestedEvent());
         }
-    }
-
-    public class MetadataRequestedEvent : Event
-    {
     }
 }

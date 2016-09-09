@@ -19,5 +19,6 @@ namespace JSCrunch.VisualStudio.Metadata
         }
 
         public bool Success { get; set; }
+        public string Output { get; set; }
     }
 }

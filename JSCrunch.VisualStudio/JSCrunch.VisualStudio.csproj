@@ -56,6 +56,7 @@
     <Compile Include="Events\DiscoverTestrunnerEvent.cs" />
     <Compile Include="Events\DiscoverTestsEvent.cs" />
     <Compile Include="Events\MetadataChangedEvent.cs" />
+    <Compile Include="Events\MetadataRequestedEvent.cs" />
     <Compile Include="Events\ProjectLoadedEvent.cs" />
     <Compile Include="Events\SolutionOpenedEvent.cs" />
     <Compile Include="Events\TestRunnerAvailableEvent.cs" />

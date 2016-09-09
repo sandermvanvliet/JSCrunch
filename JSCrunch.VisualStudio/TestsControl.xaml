@@ -35,7 +35,7 @@
 						   Height="20"
 						   Stretch="Fill"
 						   Source="{Binding Path=Icon}"/>
-                        <TextBlock Text="{Binding Path=Name}" Margin="5,0" />
+                        <TextBlock Text="{Binding Path=Name}" Margin="5,0" ToolTip="{Binding Path=Output}" />
                     </StackPanel>
                 </HierarchicalDataTemplate>
             </TreeView.Resources>
