@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using JSCrunch.Core.Events;
 
 namespace JSCrunch.Core.Listeners
@@ -19,7 +20,10 @@ namespace JSCrunch.Core.Listeners
 
         public void Publish(FileChangedEvent fileChangedEvent)
         {
-            InvokeTestRunnerOn(fileChangedEvent.Path);
+            if (Regex.IsMatch(fileChangedEvent.Path, _configurator.TestPattern))
+            {
+                InvokeTestRunnerOn(fileChangedEvent.Path);
+            }
         }
 
         private void InvokeTestRunnerOn(string path)
