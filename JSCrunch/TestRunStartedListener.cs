@@ -1,5 +1,4 @@
-﻿using System;
-using JSCrunch.Core;
+﻿using JSCrunch.Core;
 using JSCrunch.Core.Events;
 
 namespace JSCrunch
@@ -12,8 +11,6 @@ namespace JSCrunch
         {
             _output = output;
         }
-
-        public Type ForEventType => typeof(TestRunStartedEvent);
 
         public void Publish(TestRunStartedEvent testRunStartedEvent)
         {

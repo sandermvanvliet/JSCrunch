@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -24,8 +23,6 @@ namespace JSCrunch.VisualStudio.Listeners
         }
 
         public ProjectConfiguration ProjectConfiguration { get; set; }
-
-        public Type ForEventType => typeof(DiscoverTestsEvent);
 
         public void Publish(DiscoverTestsEvent eventInstance)
         {

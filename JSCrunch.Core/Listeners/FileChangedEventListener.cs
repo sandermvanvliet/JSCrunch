@@ -16,8 +16,6 @@ namespace JSCrunch.Core.Listeners
             _configurator = configurator;
         }
 
-        public Type ForEventType => typeof(FileChangedEvent);
-
         public void Publish(FileChangedEvent fileChangedEvent)
         {
             if (Regex.IsMatch(fileChangedEvent.Path, _configurator.TestPattern))

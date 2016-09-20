@@ -1,4 +1,3 @@
-using System;
 using JSCrunch.Core;
 using JSCrunch.VisualStudio.Events;
 
@@ -12,8 +11,6 @@ namespace JSCrunch.VisualStudio.Listeners
         {
             _eventQueue = eventQueue;
         }
-
-        public Type ForEventType => typeof(ProjectLoadedEvent);
 
         public void Publish(ProjectLoadedEvent projectLoadedEvent)
         {

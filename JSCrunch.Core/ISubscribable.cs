@@ -1,5 +1,4 @@
-﻿using System;
-using JSCrunch.Core.Events;
+﻿using JSCrunch.Core.Events;
 
 namespace JSCrunch.Core
 {
@@ -9,7 +8,6 @@ namespace JSCrunch.Core
 
     public interface ISubscribable<in TEvent> : ISubscribable where TEvent : Event
     {
-        Type ForEventType { get; }
         void Publish(TEvent eventInstance);
     }
 }

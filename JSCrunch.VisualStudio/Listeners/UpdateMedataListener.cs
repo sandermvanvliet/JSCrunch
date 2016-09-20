@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using JSCrunch.Core;
 using JSCrunch.Core.Events;
 using JSCrunch.VisualStudio.Events;
@@ -18,8 +17,6 @@ namespace JSCrunch.VisualStudio.Listeners
             _model = model;
             _eventQueue = eventQueue;
         }
-
-        public Type ForEventType => typeof(UpdateMetadataEvent);
 
         public void Publish(UpdateMetadataEvent eventInstance)
         {

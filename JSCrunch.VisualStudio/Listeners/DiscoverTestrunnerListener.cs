@@ -20,8 +20,6 @@ namespace JSCrunch.VisualStudio.Listeners
             _serviceProvider = serviceProvider;
         }
 
-        public Type ForEventType => typeof(DiscoverTestrunnerEvent);
-
         public void Publish(DiscoverTestrunnerEvent eventInstance)
         {
             var envDteProject = ((IVsHierarchy)eventInstance.Project).GetEnvDteProject();

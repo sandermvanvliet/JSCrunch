@@ -1,5 +1,4 @@
-﻿using System;
-using JSCrunch.Core;
+﻿using JSCrunch.Core;
 using JSCrunch.VisualStudio.Events;
 
 namespace JSCrunch.VisualStudio.Listeners
@@ -12,8 +11,6 @@ namespace JSCrunch.VisualStudio.Listeners
         {
             _configurator = configurator;
         }
-
-        public Type ForEventType => typeof(TestRunnerAvailableEvent);
 
         public void Publish(TestRunnerAvailableEvent eventInstance)
         {

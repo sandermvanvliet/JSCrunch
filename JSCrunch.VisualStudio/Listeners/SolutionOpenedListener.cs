@@ -1,5 +1,4 @@
-﻿using System;
-using JSCrunch.Core;
+﻿using JSCrunch.Core;
 using JSCrunch.Core.Events;
 using JSCrunch.VisualStudio.Events;
 
@@ -13,8 +12,6 @@ namespace JSCrunch.VisualStudio.Listeners
         {
             _eventQueue = eventQueue;
         }
-
-        public Type ForEventType => typeof(SolutionOpenedEvent);
 
         public void Publish(SolutionOpenedEvent eventInstance)
         {

@@ -4,7 +4,6 @@
 // </copyright>
 //------------------------------------------------------------------------------
 
-using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -46,8 +45,6 @@ namespace JSCrunch.VisualStudio
         }
 
         public ObservableCollection<MetadataModel> TreeCollection { get; set; }
-
-        public Type ForEventType => typeof(MetadataChangedEvent);
 
         public void Publish(MetadataChangedEvent eventInstance)
         {
